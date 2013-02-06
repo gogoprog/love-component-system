@@ -16,12 +16,12 @@ local world = ENTITY(WorldDescription)
 ObjectDescription = {
     SPRITE = {
         Texture = love.graphics.newImage("data/texture.png"),
-        Extent = {128,128}
+        Extent = {64,64}
     },
     PHYSIC = {
         World = world.World,
         Shape = "circle",
-        Radius = 32,
+        Radius = 64,
         Dynamic = true
     }
 }
@@ -42,13 +42,13 @@ GroundDescription = {
     }
 }
 
-HEART = entity_class(ENTITY, function(o,d)
+HEART = entity_class(function(o,d)
     o.Value = 10
-    o:SetPosition( 256, 0 )
+    o:SetPosition(256, 0)
 end)
 
 function HEART:OnCollisionStart()
-    self:ApplyForce(1000,0)
+    self:ApplyForce(1000, 0)
 end
 
 local heart = HEART(ObjectDescription)

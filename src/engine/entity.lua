@@ -11,11 +11,13 @@ function entity_class(base, init)
         c._base = base
     end
 
-    if base == nil and ENTITY ~= nil then
+    if not base and ENTITY ~= nil then
         base = ENTITY
+        for i,v in pairs(base) do
+            c[i] = v
+        end
+        c._base = base
     end
-
-    --c.__index = c
 
     c.__index = function(t,key)
         if c[key] == nil then

@@ -19,9 +19,6 @@ COMPONENT_PHYSIC = class(function(o,parameters,entity)
     o.Entity = entity
 end)
 
--- FUNCTIONS
-
-
 -- METHODS
 
 function COMPONENT_PHYSIC:Update(dt)
