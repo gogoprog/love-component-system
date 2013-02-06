@@ -14,8 +14,8 @@ function COMPONENT_PHYSIC_WORLD.CollisionStart(a, b)
     local user_data_a, user_data_b = a:getUserData(), b:getUserData()
 
     if user_data_a and user_data_b then
-        user_data_a:HandleMessage("CollisionStart", {other = user_data_b})
-        --user_data_b:HandleMessage("CollisionStart", {other = user_data_a})
+        user_data_a:HandleEvent("CollisionStart", {other = user_data_b})
+        user_data_b:HandleEvent("CollisionStart", {other = user_data_a})
     end
 end
 

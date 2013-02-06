@@ -41,3 +41,10 @@ function COMPONENT_PHYSIC:Render()
 
 end
 
+function COMPONENT_PHYSIC:ApplyForce(x,y)
+    self.Body:applyForce(x,y)
+end
+
+function COMPONENT_PHYSIC:SetPosition(x,y)
+    self.Body:setPosition(x,y)
+end

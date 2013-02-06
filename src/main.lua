@@ -42,7 +42,16 @@ GroundDescription = {
     }
 }
 
-local test = ENTITY(ObjectDescription)
+HEART = entity_class(ENTITY, function(o,d)
+    o.Value = 10
+    o:SetPosition( 256, 0 )
+end)
+
+function HEART:OnCollisionStart()
+    self:ApplyForce(1000,0)
+end
+
+local heart = HEART(ObjectDescription)
 local ground = ENTITY(GroundDescription)
 
 -- Callbacks
