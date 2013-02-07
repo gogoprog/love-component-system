@@ -21,16 +21,12 @@ ObjectDescription = {
     PHYSIC = {
         World = world.World,
         Shape = "circle",
-        Radius = 64,
+        Radius = 50,
         Dynamic = true
     }
 }
 
 GroundDescription = {
-    SPRITE = {
-        Texture = love.graphics.newImage("data/texture.png"),
-        Extent = {128,128}
-    },
     QUAD = {
         Extent = {1024,60}
     },
@@ -47,7 +43,7 @@ HEART = entity_class(function(o,d)
 end)
 
 function HEART:OnCollisionStart()
-    self:ApplyLinearImpulse(10, -10000)
+    self:ApplyLinearImpulse(0, -10000)
 end
 
 GROUND = entity_class(function(o,d)
@@ -56,7 +52,7 @@ end)
 function GROUND:OnCollisionStart()
 end
 
-local heart = HEART(ObjectDescription,{256,0})
+local heart = HEART(ObjectDescription,{100,0})
 local ground = GROUND(GroundDescription, {0,400})
 
 -- Callbacks
@@ -76,5 +72,9 @@ end
 function love.keypressed(key)
     if key == "escape" then
         love.event.push("quit")
+    elseif key == "left" then
+        heart:ApplyLinearImpulse(-2000,0)
+    elseif key == "right" then
+        heart:ApplyLinearImpulse(2000,0)
     end
 end
