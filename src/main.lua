@@ -44,21 +44,25 @@ GroundDescription = {
 
 HEART = entity_class(function(o,d)
     o.Value = 10
-    o:SetPosition(256, 0)
 end)
 
 function HEART:OnCollisionStart()
-    self:ApplyForce(1000, 0)
+    self:ApplyLinearImpulse(10, -10000)
 end
 
-local heart = HEART(ObjectDescription)
-local ground = ENTITY(GroundDescription)
+GROUND = entity_class(function(o,d)
+end)
+
+function GROUND:OnCollisionStart()
+end
+
+local heart = HEART(ObjectDescription,{256,0})
+local ground = GROUND(GroundDescription, {0,400})
 
 -- Callbacks
 
 function love.load()
     love.physics.setMeter(32)
-    ground.Position[2] = 400
 end
 
 function love.update(dt)

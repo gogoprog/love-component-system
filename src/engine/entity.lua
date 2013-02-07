@@ -26,6 +26,7 @@ function entity_class(base, init)
                     return v[key]
                 end
             end
+            return function() end
         end
 
         return c[key]
@@ -60,13 +61,15 @@ function entity_class(base, init)
     return c
 end
 
-ENTITY = entity_class(function(o,components)
+ENTITY = entity_class(function(o,components,position)
+
+    o.Orientation = 0
+    o.Position = position or { 0, 0, 0 }
+
     o.Components = {}
     for k,v in pairs(components) do
         table.insert(o.Components,_G["COMPONENT_" .. k](v,o))
     end
-    o.Position = { 0, 0, 0 }
-    o.Orientation = 0
 
     table.insert(ENTITY.Items,o)
 end)
