@@ -21,6 +21,7 @@ end
 
 function love.update(dt)
     ENTITY.UpdateAll(dt)
+    obj.Orientation = obj.Orientation + dt
 end
 
 function love.draw()
