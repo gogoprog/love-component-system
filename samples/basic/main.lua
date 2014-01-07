@@ -38,7 +38,8 @@ GroundDescription = {
     }
 }
 
-HEART = entity_class(function(o,d)
+HEART = entity_class(function(o,d,p)
+    ENTITY.Init(o,d,p)
     o.Value = 10
 end)
 
@@ -46,7 +47,8 @@ function HEART:OnCollisionStart()
     self:ApplyLinearImpulse(0, -10000)
 end
 
-GROUND = entity_class(function(o,d)
+GROUND = entity_class(function(o,d,p)
+    ENTITY.Init(o,d,p)
 end)
 
 function GROUND:OnCollisionStart()

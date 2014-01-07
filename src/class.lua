@@ -1,5 +1,6 @@
 function class(base, init)
     local c = {}
+
     if not init and type(base) == 'function' then
         init = base
         base = nil
@@ -10,24 +11,27 @@ function class(base, init)
         c._base = base
     end
 
-    c.__index = c
+    c.__index = function(t,key)
+        return c[key]
+    end
 
     local mt = {}
     mt.__call = function(class_tbl, ...)
         local obj = {}
         setmetatable(obj,c)
+
+        if base and base.init then
+            base.init(obj, ...)
+        end
+
         if init then
             init(obj,...)
-        else 
-            if base and base.init then
-                base.init(obj, ...)
-            end
         end
         return obj
     end
-    
+
     c.init = init
-    c.is_a = function(self, klass)
+    c.IsA = function(self, klass)
         local m = getmetatable(self)
         while m do 
             if m == klass then return true end
@@ -35,6 +39,7 @@ function class(base, init)
         end
         return false
     end
+
     setmetatable(c, mt)
     return c
 end

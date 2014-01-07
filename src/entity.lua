@@ -1,4 +1,12 @@
-function entity_class(base, init)
+local EntityMethoder = {}
+local EntityMethoder_mt = {
+    __call = function(o, e, ...)
+        return EntityMethoder.Function(EntityMethoder.Component, ...)
+    end
+}
+setmetatable(EntityMethoder,EntityMethoder_mt)
+
+function entity_class(base, init, no_parent)
     local c = {}
 
     if not init and type(base) == 'function' then
@@ -11,7 +19,7 @@ function entity_class(base, init)
         c._base = base
     end
 
-    if not base and ENTITY ~= nil then
+    if not no_parent and not base then
         base = ENTITY
         for i,v in pairs(base) do
             c[i] = v
@@ -23,7 +31,9 @@ function entity_class(base, init)
         if c[key] == nil then
             for k,v in ipairs(t.Components) do
                 if v[key] ~= nil then
-                    return v[key]
+                    EntityMethoder.Function = v[key]
+                    EntityMethoder.Component = v
+                    return EntityMethoder
                 end
             end
             return function() end
@@ -37,18 +47,14 @@ function entity_class(base, init)
         local obj = {}
         setmetatable(obj,c)
 
-        if base and base.init then
-            base.init(obj, ...)
-        end
-
         if init then
             init(obj,...)
         end
         return obj
     end
 
-    c.init = init
-    c.is_a = function(self, klass)
+    c.Init = init
+    c.IsA = function(self, klass)
         local m = getmetatable(self)
         while m do 
             if m == klass then return true end
@@ -67,27 +73,71 @@ ENTITY = entity_class(function(o,components,position)
     o.Position = position or { 0, 0, 0 }
 
     o.Components = {}
-    for k,v in pairs(components) do
-        table.insert(o.Components,_G["COMPONENT_" .. k](v,o))
+    if components ~= nil then
+        local component, properties, constructor
+        for k,v in pairs(components) do
+
+            if type(k) == 'string' then
+                constructor = _G["COMPONENT_" .. k]
+                properties = v
+            else
+                constructor = _G["COMPONENT_" .. v.Type]
+                properties = v.Properties
+            end
+
+            if constructor.new then
+                component = constructor:new(properties,o)
+            else
+                component = constructor(properties,o)
+            end
+
+            if component.Initialize then
+                component:Initialize()
+            end
+
+            if component.Register then
+                component:Register()
+            end
+
+            table.insert(o.Components, component)
+        end
     end
-
     table.insert(ENTITY.Items,o)
-end)
+end,
+nil,
+true)
 
-ENTITY.Items = {}
-ENTITY.ItemsToDestroy = {}
+ENTITY.Items = ENTITY.Items or {}
+ENTITY.ItemsToDestroy = ENTITY.ItemsToDestroy or {}
 
 -- FUNCTIONS
 
+function ENTITY.DestroyAll()
+    for k,v in ipairs(ENTITY.Items) do
+        v:Unregister()
+    end
+
+    ENTITY.Items = {}
+end
+
 function ENTITY.UpdateAll(dt)
     for k,v in ipairs(ENTITY.Items) do
-        v:Update(dt)
+        v:InternalUpdate(dt)
     end
 
     for k,v in ipairs(ENTITY.ItemsToDestroy) do
-        -- :TODO: Unload ...
-        table.remove(ENTITY.Items,v)
+        v:Unregister()
+        v.Components = {}
+        for j,item in ipairs(ENTITY.Items) do
+            if item == v then
+                ENTITY.Items[j] = ENTITY.Items[#ENTITY.Items]
+                ENTITY.Items[#ENTITY.Items] = nil
+                break
+            end
+        end
     end
+
+    ENTITY.ItemsToDestroy = {}
 end
 
 function ENTITY.RenderAll()
@@ -96,12 +146,46 @@ function ENTITY.RenderAll()
     end
 end
 
+function ENTITY.GetCount()
+    return #ENTITY.Items
+end
+
+function ENTITY.GetItems()
+    return ENTITY.Items
+end
+
 -- METHODS
 
-function ENTITY:Update(dt)
+function ENTITY:Register()
+    for k,v in ipairs(self.Components) do
+        if v.Register then
+            v:Register()
+        end
+    end
+end
+
+function ENTITY:Unregister()
+    for k,v in ipairs(self.Components) do
+        if v.Unregister then
+            v:Unregister()
+        end
+    end
+end
+
+function ENTITY:InternalUpdate(dt)
+    self:Update(dt)
     for k,v in ipairs(self.Components) do
         v:Update(dt)
     end
+end
+
+function ENTITY:UpdateComponents(dt)
+    for k,v in ipairs(self.Components) do
+        v:Update(dt)
+    end
+end
+
+function ENTITY:Update(dt)
 end
 
 function ENTITY:Render()
@@ -111,13 +195,6 @@ function ENTITY:Render()
 end
 
 function ENTITY:Destroy()
-    table.remove(ENTITY.ItemsToDestroy,self)
-end
-
-function ENTITY:HandleEvent(event, parameters)
-    local string = "On" .. event
-
-    if self[string] ~= nil then
-        self[string](self, parameters)
-    end
+    table.insert(ENTITY.ItemsToDestroy,self)
+    self.ItIsDestroyed = true
 end
