@@ -3,6 +3,8 @@ require 'lcs.component_physic_world'
 require 'lcs.component_physic'
 require 'lcs.component_sprite'
 require 'lcs.component_quad'
+require 'lcs.component_camera'
+require 'lcs.camera'
 
 -- Locals
 
@@ -44,7 +46,7 @@ HEART = entity_class(function(o,d,p)
 end)
 
 function HEART:OnCollisionStart()
-    self:ApplyLinearImpulse(0, -10000)
+    self:ApplyLinearImpulse(1000, -10000)
 end
 
 GROUND = entity_class(function(o,d,p)
@@ -57,6 +59,8 @@ end
 local heart = HEART(ObjectDescription,{100,0})
 local ground = GROUND(GroundDescription, {0,400})
 
+local camera = CAMERA({-250,0})
+
 -- Callbacks
 
 function love.load()
@@ -65,9 +69,11 @@ end
 
 function love.update(dt)
     ENTITY.UpdateAll(dt)
+    camera.Position[1] = camera.Position[1] + dt * 100
 end
 
 function love.draw()
+    camera:PreRender()
     ENTITY.RenderAll()
 end
 

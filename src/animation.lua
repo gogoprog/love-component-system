@@ -47,17 +47,21 @@ function ANIMATION:Update(dt)
     self.Frame = math.floor((self.Time / self.Data.Duration) * self.Data.FrameCount) + 1
     self.Frame = math.min(self.Frame, self.Data.FrameCount)
 
-    if self.Time >= self.Data.Duration then
-        self.Time = 0
+    while self.Time >= self.Data.Duration do
+        self.Time = self.Time - self.Data.Duration
     end
 end
 
-function ANIMATION:Render(x,y)
+function ANIMATION:Render(x,y,o,ox,oy)
     love.graphics.draw(
         self.Data.Parameters.Source,
         self.Data.Quads[self.Frame],
         x,
         y,
-        0
+        o,
+        1,
+        1,
+        ox,
+        oy
         )
 end

@@ -12,7 +12,7 @@ function love.load()
         CellWidth = 70,
         CellHeight = 80,
         Frames = { 0, 1, 2, 3 },
-        FrameRate = 4
+        FrameRate = 12
         })
 
     local description = {
