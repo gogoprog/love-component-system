@@ -7,6 +7,8 @@ end)
 -- METHODS
 
 function CAMERA:PreRender()
+    love.graphics.origin()
+
     local p = self.Position
     love.graphics.translate(-p[1],-p[2])
 end

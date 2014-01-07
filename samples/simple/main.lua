@@ -23,19 +23,19 @@ ObjectDescription = {
     PHYSIC = {
         World = world.World,
         Shape = "circle",
-        Radius = 50,
+        Radius = 32,
         Dynamic = true
     }
 }
 
 GroundDescription = {
     QUAD = {
-        Extent = {1024,60}
+        Extent = {300,60}
     },
     PHYSIC = {
         World = world.World,
         Shape = "rectangle",
-        Extent = {1024,60},
+        Extent = {300,60},
         Dynamic = false
     }
 }
@@ -46,7 +46,7 @@ HEART = entity_class(function(o,d,p)
 end)
 
 function HEART:OnCollisionStart()
-    self:ApplyLinearImpulse(1000, -10000)
+    self:ApplyLinearImpulse(0, -1000)
 end
 
 GROUND = entity_class(function(o,d,p)
@@ -56,10 +56,10 @@ end)
 function GROUND:OnCollisionStart()
 end
 
-local heart = HEART(ObjectDescription,{100,0})
-local ground = GROUND(GroundDescription, {0,400})
+local heart = HEART(ObjectDescription,{0,-200})
+local ground = GROUND(GroundDescription, {0,200})
 
-local camera = CAMERA({-250,0})
+local camera = CAMERA({-400,-300})
 
 -- Callbacks
 
@@ -69,7 +69,6 @@ end
 
 function love.update(dt)
     ENTITY.UpdateAll(dt)
-    camera.Position[1] = camera.Position[1] + dt * 100
 end
 
 function love.draw()
@@ -81,8 +80,8 @@ function love.keypressed(key)
     if key == "escape" then
         love.event.push("quit")
     elseif key == "left" then
-        heart:ApplyLinearImpulse(-2000,0)
+        heart:ApplyLinearImpulse(-100,0)
     elseif key == "right" then
-        heart:ApplyLinearImpulse(2000,0)
+        heart:ApplyLinearImpulse(100,0)
     end
 end

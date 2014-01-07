@@ -6,7 +6,7 @@ local COMPONENT_PHYSIC_Init = {
         o.Shape = love.physics.newCircleShape(parameters.Radius)
     end,
     rectangle = function(o,parameters,x,y)
-        o.Body = love.physics.newBody(parameters.World, x, y )
+        o.Body = love.physics.newBody(parameters.World, x, y)
         o.Shape = love.physics.newRectangleShape(parameters.Extent[1], parameters.Extent[2])
     end
 }
