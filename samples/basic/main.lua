@@ -1,6 +1,7 @@
 require 'lcs.entity'
 require 'lcs.component_sprite'
 require 'lcs.component_quad'
+require 'lcs.component_animated_sprite'
 
 -- Locals
 
