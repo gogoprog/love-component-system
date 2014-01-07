@@ -1,8 +1,8 @@
-require 'engine.entity'
-require 'engine.component_physic_world'
-require 'engine.component_physic'
-require 'engine.component_sprite'
-require 'engine.component_quad'
+require 'lcs.entity'
+require 'lcs.component_physic_world'
+require 'lcs.component_physic'
+require 'lcs.component_sprite'
+require 'lcs.component_quad'
 
 -- Locals
 

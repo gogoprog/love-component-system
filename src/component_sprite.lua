@@ -1,4 +1,4 @@
-require 'engine.class'
+require 'lcs.class'
 
 COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.Texture = parameters.Texture

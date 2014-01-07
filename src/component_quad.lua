@@ -1,4 +1,4 @@
-require 'engine.class'
+require 'lcs.class'
 
 COMPONENT_QUAD = class(function(o,parameters,entity)
     o.Extent = parameters.Extent

@@ -1,4 +1,4 @@
-require 'engine.class'
+require 'lcs.class'
 
 local COMPONENT_PHYSIC_Init = {
     circle = function(o,parameters,x,y)

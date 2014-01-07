@@ -1,4 +1,4 @@
-require 'engine.class'
+require 'lcs.class'
 
 local FIXED_RATE = 0.01
 
