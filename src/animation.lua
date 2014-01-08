@@ -14,7 +14,13 @@ function ANIMATION.Create(name, parameters)
     local height = parameters.CellHeight
     local cells_per_lines = sw / width
 
-    item.Parameters = parameters
+    item.CellWidth = parameters.CellWidth
+    item.CellHeight = parameters.CellHeight
+    item.Source = parameters.Source
+
+    item.FrameRate = parameters.FrameRate or 16
+    item.Loop = parameters.Loop or false
+
     item.Quads = {}
 
     for v,f in ipairs(parameters.Frames) do
@@ -31,7 +37,7 @@ function ANIMATION.Create(name, parameters)
         table.insert(item.Quads,q)
     end
 
-    item.TimePerFrame = ( 1 / parameters.FrameRate )
+    item.TimePerFrame = ( 1 / item.FrameRate )
     item.Duration = #parameters.Frames * item.TimePerFrame
     item.FrameCount = #parameters.Frames
 
@@ -54,7 +60,7 @@ end
 
 function ANIMATION:Render(x,y,o,sx,sy,ox,oy)
     love.graphics.draw(
-        self.Data.Parameters.Source,
+        self.Data.Source,
         self.Data.Quads[self.Frame],
         x,
         y,

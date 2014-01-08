@@ -18,7 +18,7 @@ function love.load()
         }
     }
 
-    obj = ENTITY(description,{400,400})
+    obj = ENTITY(description,{400,300})
 end
 
 function love.update(dt)

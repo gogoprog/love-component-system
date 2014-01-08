@@ -2,11 +2,12 @@ require 'lcs.class'
 require 'lcs.animation'
 
 COMPONENT_ANIMATED_SPRITE = class(function(o,parameters,entity)
-    o.Animation = ANIMATION(parameters.Animation)
+    local anim = ANIMATION(parameters.Animation)
+    o.Animations = { anim }
     o.Layer = parameters.Layer or 1
     o.Entity = entity
-    local cw = parameters.Animation.Parameters.CellWidth
-    local ch = parameters.Animation.Parameters.CellHeight
+    local cw = parameters.Animation.CellWidth
+    local ch = parameters.Animation.CellHeight
     o.OffsetX = cw * 0.5
     o.OffsetY = ch * 0.5
     o.Extent = parameters.Extent or {cw, ch}

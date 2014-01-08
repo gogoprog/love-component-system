@@ -2,7 +2,7 @@ require 'lcs.engine'
 
 -- Locals
 
-ObjectDescription = {
+local description = {
     {
         Type = "SPRITE",
         Properties = {
@@ -26,12 +26,13 @@ ObjectDescription = {
 local obj
 
 function love.load()
-    obj = ENTITY(ObjectDescription,{400,400})
+    obj = ENTITY(description,{400,400})
 end
 
 function love.update(dt)
-    ENGINE.Update(dt)
     obj.Orientation = obj.Orientation + dt
+
+    ENGINE.Update(dt)
 end
 
 function love.draw()
