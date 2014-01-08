@@ -4,6 +4,7 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.Texture = parameters.Texture
     o.Extent = parameters.Extent
     o.Offset = parameters.Offset
+    o.Layer = parameters.Layer or 0
     o.Entity = entity
 
     o.ScaleFactorX = o.Extent[1] / o.Texture:getWidth()
@@ -20,6 +21,10 @@ end)
 function COMPONENT_SPRITE:Update()
 end
 
+function COMPONENT_SPRITE:PreRender()
+    ENGINE.AddRenderable(self,self.Layer)
+end
+
 function COMPONENT_SPRITE:Render()
     love.graphics.draw(
         self.Texture,
@@ -32,4 +37,3 @@ function COMPONENT_SPRITE:Render()
         self.OffsetY
         )
 end
-

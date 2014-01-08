@@ -140,9 +140,9 @@ function ENTITY.UpdateAll(dt)
     ENTITY.ItemsToDestroy = {}
 end
 
-function ENTITY.RenderAll()
+function ENTITY.PreRenderAll()
     for k,v in ipairs(ENTITY.Items) do
-        v:Render()
+        v:PreRender()
     end
 end
 
