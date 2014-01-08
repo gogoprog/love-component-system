@@ -52,15 +52,15 @@ function ANIMATION:Update(dt)
     end
 end
 
-function ANIMATION:Render(x,y,o,ox,oy)
+function ANIMATION:Render(x,y,o,sx,sy,ox,oy)
     love.graphics.draw(
         self.Data.Parameters.Source,
         self.Data.Quads[self.Frame],
         x,
         y,
         o,
-        1,
-        1,
+        sx,
+        sy,
         ox,
         oy
         )

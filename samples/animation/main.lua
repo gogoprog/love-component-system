@@ -8,12 +8,13 @@ function love.load()
         CellWidth = 70,
         CellHeight = 80,
         Frames = { 0, 1, 2, 3 },
-        FrameRate = 12
+        FrameRate = 8
         })
 
     local description = {
         ANIMATED_SPRITE = {
-            Animation = ANIMATION.Get("ken")
+            Animation = ANIMATION.Get("ken"),
+            Extent = { 256, 256 }
         }
     }
 

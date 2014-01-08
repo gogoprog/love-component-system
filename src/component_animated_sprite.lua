@@ -5,8 +5,13 @@ COMPONENT_ANIMATED_SPRITE = class(function(o,parameters,entity)
     o.Animation = ANIMATION(parameters.Animation)
     o.Layer = parameters.Layer or 1
     o.Entity = entity
-    o.OffsetX = parameters.Animation.Parameters.CellWidth * 0.5
-    o.OffsetY = parameters.Animation.Parameters.CellHeight * 0.5
+    local cw = parameters.Animation.Parameters.CellWidth
+    local ch = parameters.Animation.Parameters.CellHeight
+    o.OffsetX = cw * 0.5
+    o.OffsetY = ch * 0.5
+    o.Extent = parameters.Extent or {cw, ch}
+    o.ScaleFactorX = o.Extent[1] / cw
+    o.ScaleFactorY = o.Extent[2] / ch
 end)
 
 -- METHODS
@@ -21,5 +26,5 @@ end
 
 function COMPONENT_ANIMATED_SPRITE:Render()
     local p = self.Entity.Position
-    self.Animation:Render(p[1],p[2],self.Entity.Orientation,self.OffsetX, self.OffsetY)
+    self.Animation:Render(p[1],p[2],self.Entity.Orientation,self.ScaleFactorX,self.ScaleFactorY,self.OffsetX, self.OffsetY)
 end
