@@ -33,6 +33,6 @@ function COMPONENT_PHYSIC_WORLD:Update(dt)
     end
 end
 
-function COMPONENT_PHYSIC_WORLD:Render()
+function COMPONENT_PHYSIC_WORLD:PreRender()
 
 end

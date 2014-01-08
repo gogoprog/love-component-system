@@ -5,8 +5,8 @@ require 'lcs.component_quad'
 require 'lcs.component_animated_sprite'
 require 'lcs.component_physic'
 require 'lcs.component_physic_world'
+require 'lcs.component_camera'
 
-require 'lcs.camera'
 require 'lcs.animation'
 
 ENGINE = {

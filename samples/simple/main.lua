@@ -34,6 +34,11 @@ GroundDescription = {
     }
 }
 
+CameraDescription = {
+    CAMERA = {
+    }
+}
+
 HEART = entity_class(function(o,d,p)
     ENTITY.Init(o,d,p)
     o.Value = 10
@@ -53,7 +58,7 @@ end
 local heart = HEART(ObjectDescription,{0,-200})
 local ground = GROUND(GroundDescription, {0,200})
 
-local camera = CAMERA({-400,-300})
+local camera = ENTITY(CameraDescription,{-400,-300})
 
 -- Callbacks
 
@@ -66,7 +71,6 @@ function love.update(dt)
 end
 
 function love.draw()
-    camera:PreRender()
     ENGINE.Render()
 end
 

@@ -12,9 +12,6 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.OffsetY = o.Texture:getHeight() * 0.5
 end)
 
--- FUNCTIONS
-
-
 -- METHODS
 
 function COMPONENT_SPRITE:Update()

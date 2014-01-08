@@ -34,7 +34,7 @@ function COMPONENT_PHYSIC:Update(dt)
     end
 end
 
-function COMPONENT_PHYSIC:Render()
+function COMPONENT_PHYSIC:PreRender()
 
 end
 
