@@ -4,6 +4,7 @@ require 'lcs.animation'
 COMPONENT_ANIMATED_SPRITE = class(function(o,parameters,entity)
     local anim = ANIMATION(parameters.Animation)
     o.Animations = { anim }
+    o.Animation = anim
     o.Layer = parameters.Layer or 1
     o.Entity = entity
     local cw = parameters.Animation.CellWidth
