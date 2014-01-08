@@ -6,6 +6,7 @@ require 'lcs.component_animated_sprite'
 require 'lcs.component_physic'
 require 'lcs.component_physic_world'
 require 'lcs.component_camera'
+require 'lcs.component_text'
 
 require 'lcs.animation'
 

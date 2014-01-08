@@ -9,9 +9,6 @@ COMPONENT_QUAD = class(function(o,parameters,entity)
     o.OffsetY = o.Extent[2] * 0.5
 end)
 
--- FUNCTIONS
-
-
 -- METHODS
 
 function COMPONENT_QUAD:Update()
