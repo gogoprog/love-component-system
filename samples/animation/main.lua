@@ -1,7 +1,5 @@
 require 'lcs.engine'
 
-local obj
-
 function love.load()
     ANIMATION.Create("ken",{
         Source = love.graphics.newImage("data/ken.png"),
@@ -18,7 +16,7 @@ function love.load()
         }
     }
 
-    obj = ENTITY(description,{400,300})
+    ENTITY(description,{400,300})
 end
 
 function love.update(dt)

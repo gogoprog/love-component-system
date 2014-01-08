@@ -23,14 +23,14 @@ local description = {
 
 -- Callbacks
 
-local obj
+local entity
 
 function love.load()
-    obj = ENTITY(description,{400,400})
+    entity = ENTITY(description,{400,300})
 end
 
 function love.update(dt)
-    obj.Orientation = obj.Orientation + dt
+    entity.Orientation = entity.Orientation + dt
 
     ENGINE.Update(dt)
 end

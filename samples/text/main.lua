@@ -6,21 +6,22 @@ local description = {
     {
         Type = "TEXT",
         Properties = {
-            Text = "love-component-system"
+            Text = "love-component-system",
+            Extent = {312,64}
         }
     }
 }
 
 -- Callbacks
 
-local obj
+local entity
 
 function love.load()
-    obj = ENTITY(description,{400,300})
+    entity = ENTITY(description,{400,300})
 end
 
 function love.update(dt)
-    obj.Orientation = obj.Orientation + dt
+    entity.Orientation = entity.Orientation + dt
 
     ENGINE.Update(dt)
 end
