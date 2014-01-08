@@ -3,9 +3,21 @@ require 'lcs.engine'
 -- Locals
 
 ObjectDescription = {
-    SPRITE = {
-        Texture = love.graphics.newImage("data/texture.png"),
-        Extent = {256,256}
+    {
+        Type = "SPRITE",
+        Properties = {
+            Texture = love.graphics.newImage("data/texture.png"),
+            Extent = {64,64},
+            Layer = 11
+        }
+    },
+    {
+        Type = "SPRITE",
+        Properties = {
+            Texture = love.graphics.newImage("data/texture.png"),
+            Extent = {256,256},
+            Layer = 3
+        }
     }
 }
 

@@ -3,6 +3,7 @@ require 'lcs.class'
 COMPONENT_QUAD = class(function(o,parameters,entity)
     o.Extent = parameters.Extent
     o.Color = parameters.Color
+    o.Layer = parameters.Layer or 1
     o.Entity = entity
     o.OffsetX = o.Extent[1] * 0.5
     o.OffsetY = o.Extent[2] * 0.5
@@ -14,6 +15,10 @@ end)
 -- METHODS
 
 function COMPONENT_QUAD:Update()
+end
+
+function COMPONENT_QUAD:PreRender()
+    ENGINE.AddRenderable(self,self.Layer)
 end
 
 function COMPONENT_QUAD:Render()

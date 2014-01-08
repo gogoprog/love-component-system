@@ -188,9 +188,9 @@ end
 function ENTITY:Update(dt)
 end
 
-function ENTITY:Render()
+function ENTITY:PreRender()
     for k,v in ipairs(self.Components) do
-        v:Render()
+        v:PreRender()
     end
 end
 

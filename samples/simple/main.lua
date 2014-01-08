@@ -1,10 +1,4 @@
-require 'lcs.entity'
-require 'lcs.component_physic_world'
-require 'lcs.component_physic'
-require 'lcs.component_sprite'
-require 'lcs.component_quad'
-require 'lcs.component_camera'
-require 'lcs.camera'
+require 'lcs.engine'
 
 -- Locals
 
@@ -68,12 +62,12 @@ function love.load()
 end
 
 function love.update(dt)
-    ENTITY.UpdateAll(dt)
+    ENGINE.Update(dt)
 end
 
 function love.draw()
     camera:PreRender()
-    ENTITY.RenderAll()
+    ENGINE.Render()
 end
 
 function love.keypressed(key)

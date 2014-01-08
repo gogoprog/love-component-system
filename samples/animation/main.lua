@@ -1,8 +1,4 @@
-require 'lcs.entity'
-require 'lcs.component_sprite'
-require 'lcs.component_quad'
-require 'lcs.component_animated_sprite'
-require 'lcs.animation'
+require 'lcs.engine'
 
 local obj
 
@@ -25,11 +21,11 @@ function love.load()
 end
 
 function love.update(dt)
-    ENTITY.UpdateAll(dt)
+    ENGINE.Update(dt)
 end
 
 function love.draw()
-    ENTITY.RenderAll()
+    ENGINE.Render()
 end
 
 function love.keypressed(key)

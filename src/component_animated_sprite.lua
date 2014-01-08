@@ -3,6 +3,7 @@ require 'lcs.animation'
 
 COMPONENT_ANIMATED_SPRITE = class(function(o,parameters,entity)
     o.Animation = ANIMATION(parameters.Animation)
+    o.Layer = parameters.Layer or 1
     o.Entity = entity
     o.OffsetX = parameters.Animation.Parameters.CellWidth * 0.5
     o.OffsetY = parameters.Animation.Parameters.CellHeight * 0.5
@@ -12,6 +13,10 @@ end)
 
 function COMPONENT_ANIMATED_SPRITE:Update(dt)
     self.Animation:Update(dt)
+end
+
+function COMPONENT_ANIMATED_SPRITE:PreRender()
+    ENGINE.AddRenderable(self,self.Layer)
 end
 
 function COMPONENT_ANIMATED_SPRITE:Render()

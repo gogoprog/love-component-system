@@ -4,9 +4,8 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.Texture = parameters.Texture
     o.Extent = parameters.Extent
     o.Offset = parameters.Offset
-    o.Layer = parameters.Layer or 0
+    o.Layer = parameters.Layer or 1
     o.Entity = entity
-
     o.ScaleFactorX = o.Extent[1] / o.Texture:getWidth()
     o.ScaleFactorY = o.Extent[2] / o.Texture:getHeight()
     o.OffsetX = o.Texture:getWidth() * 0.5
