@@ -29,7 +29,7 @@ function COMPONENT_PARTICLE:Render()
             self.System,
             0,
             0,
-            self.Entity.Orientation
+            0 -- self.Entity.Orientation -- Unsupported atm.
             )
     else
         local p = self.Entity.Position

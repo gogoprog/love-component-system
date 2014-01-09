@@ -101,8 +101,10 @@ function love.keypressed(key)
     if key == "escape" then
         love.event.push("quit")
     elseif key == "left" then
-        heart:ApplyLinearImpulse(-100,0)
+        heart1:ApplyLinearImpulse(-100,0)
     elseif key == "right" then
-        heart:ApplyLinearImpulse(100,0)
+        heart1:ApplyLinearImpulse(100,0)
+    elseif key == "r" then
+        heart1:SetOrientation(heart1.Orientation + 10)
     end
 end
