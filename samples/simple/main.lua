@@ -25,12 +25,12 @@ local descriptions ={
     },
     Ground = {
         QUAD = {
-            Extent = {300,60},
+            Extent = {600,60},
             Layer = 1
         },
         PHYSIC = {
             Shape = "rectangle",
-            Extent = {300,60},
+            Extent = {600,60},
             Dynamic = false
         }
     },
@@ -59,23 +59,33 @@ end
 
 -- Callbacks
 
-local heart
+local heart1, heart2
 
 function love.load()
 
-    local ps = love.graphics.newParticleSystem(love.graphics.newImage("data/texture.png"), 300)
-
+    local ps = love.graphics.newParticleSystem(love.graphics.newImage("data/texture.png"), 30)
     ps:setEmissionRate(30)
     ps:setParticleLifetime(2)
     ps:setSizes(1,5)
     ps:setColors(255,255,255,255,0,0,0,0)
 
+    local ps2 = love.graphics.newParticleSystem(love.graphics.newImage("data/texture.png"), 30)
+    ps2:setEmissionRate(30)
+    ps2:setParticleLifetime(2)
+    ps2:setSizes(1,5)
+    ps2:setColors(255,255,255,255,0,0,0,0)
+
     ENTITY(descriptions.World)
-    heart = HEART(descriptions.Object,{0,-200})
-    GROUND(descriptions.Ground, {0,200})
+    GROUND(descriptions.Ground, {0,300})
     ENTITY(descriptions.Camera,{-400,-300})
 
-    heart:AddParticleSystem(ps)
+    heart1 = HEART(descriptions.Object,{-200,-200})
+    heart2 = HEART(descriptions.Object,{200,-200})
+
+    heart1:AddParticleSystem(ps)
+    heart2:AddParticleSystem(ps2)
+
+    heart2:SetKeepLocal(true)
 end
 
 function love.update(dt)

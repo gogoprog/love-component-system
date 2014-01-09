@@ -43,6 +43,10 @@ function COMPONENT_PARTICLE:Render()
     end
 end
 
+function COMPONENT_PARTICLE:SetKeepLocal(kl)
+    self.KeepLocal = kl
+end
+
 function COMPONENT_PARTICLE:AddParticleSystem(ps)
     self.System = ps
 end
