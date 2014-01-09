@@ -4,7 +4,7 @@ COMPONENT_SPRITE_BATCH = class(function(o,parameters,entity)
     o.SpriteSheet = parameters.SpriteSheet
     o.Layer = parameters.Layer or 1
     o.Entity = entity
-    o.Batch = love.graphics.newSpriteBatch(o.SpriteSheet.Source, parameters.Size or 128)
+    o.Batch = love.graphics.newSpriteBatch(o.SpriteSheet.Source, parameters.Size or 1024)
     o.Entity.SpriteBatch = o.Batch
 end)
 
