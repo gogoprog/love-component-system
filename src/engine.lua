@@ -7,6 +7,7 @@ require 'lcs.component_physic'
 require 'lcs.component_physic_world'
 require 'lcs.component_camera'
 require 'lcs.component_text'
+require 'lcs.component_particle'
 
 require 'lcs.animation'
 

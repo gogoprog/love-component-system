@@ -22,10 +22,11 @@ function COMPONENT_SPRITE:PreRender()
 end
 
 function COMPONENT_SPRITE:Render()
+    local p = self.Entity.Position
     love.graphics.draw(
         self.Texture,
-        self.Entity.Position[1],
-        self.Entity.Position[2],
+        p[1],
+        p[2],
         self.Entity.Orientation,
         self.ScaleFactorX,
         self.ScaleFactorY,
