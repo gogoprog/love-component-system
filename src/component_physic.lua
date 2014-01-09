@@ -49,4 +49,10 @@ end
 
 function COMPONENT_PHYSIC:SetPosition(x,y)
     self.Body:setPosition(x,y)
+    self.Entity.Position = {x,y}
+end
+
+function COMPONENT_PHYSIC:SetOrientation(r)
+    self.Body:setAngle(r)
+    self.Entity.Orientation = r
 end

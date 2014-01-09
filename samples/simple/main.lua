@@ -2,6 +2,7 @@ require 'lcs.engine'
 
 -- Locals
 
+local texture = love.graphics.newImage("data/texture.png")
 local descriptions ={
     World = {
         PHYSIC_WORLD = {
@@ -9,7 +10,7 @@ local descriptions ={
     },
     Object = {
         SPRITE = {
-            Texture = love.graphics.newImage("data/texture.png"),
+            Texture = texture,
             Extent = {64,64},
             Layer = 3
         },
@@ -63,13 +64,13 @@ local heart1, heart2
 
 function love.load()
 
-    local ps = love.graphics.newParticleSystem(love.graphics.newImage("data/texture.png"), 30)
+    local ps = love.graphics.newParticleSystem(texture, 30)
     ps:setEmissionRate(30)
     ps:setParticleLifetime(2)
     ps:setSizes(1,5)
     ps:setColors(255,255,255,255,0,0,0,0)
 
-    local ps2 = love.graphics.newParticleSystem(love.graphics.newImage("data/texture.png"), 30)
+    local ps2 = love.graphics.newParticleSystem(texture, 30)
     ps2:setEmissionRate(30)
     ps2:setParticleLifetime(2)
     ps2:setSizes(1,5)
