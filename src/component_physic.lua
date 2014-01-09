@@ -12,6 +12,7 @@ local COMPONENT_PHYSIC_Init = {
 }
 
 COMPONENT_PHYSIC = class(function(o,parameters,entity)
+    parameters.World = parameters.World or COMPONENT_PHYSIC_WORLD.DefaultWorld
     COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2])
     o.Fixture = love.physics.newFixture(o.Body, o.Shape)
     o.Fixture:setUserData(entity)

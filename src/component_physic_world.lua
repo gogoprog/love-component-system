@@ -9,6 +9,7 @@ COMPONENT_PHYSIC_WORLD = class(function(o,parameters,entity)
     o.TimeSum = 0
     o.Entity = entity
     o.Entity.World = o.World
+    COMPONENT_PHYSIC_WORLD.DefaultWorld = COMPONENT_PHYSIC_WORLD.DefaultWorld or o.World
 end)
 
 -- FUNCTIONS
