@@ -2,20 +2,22 @@ require 'lcs.class'
 
 COMPONENT_PARTICLE = class(function(o,parameters,entity)
     o.Entity = entity
-    o.System = parameters.System
+    o.Systems = parameters.Systems or { parameters.System }
     o.Layer = parameters.Layer or 1
-    o.KeepLocal = parameters.KeepLocal
+    o.KeepLocalTable = parameters.KeepLocalTable or {parameters.KeepLocal}
 end)
 
 -- METHODS
 
 function COMPONENT_PARTICLE:Update(dt)
-    if not self.KeepLocal then
-        local p = self.Entity.Position
-        self.System:setPosition(p[1],p[2])
-    end
+    for i,s in ipairs(self.Systems) do
+        if not self.KeepLocalTable[i] then
+            local p = self.Entity.Position
+            s:setPosition(p[1],p[2])
+        end
 
-    self.System:update(dt)
+        s:update(dt)
+    end
 end
 
 function COMPONENT_PARTICLE:PreRender()
@@ -23,30 +25,28 @@ function COMPONENT_PARTICLE:PreRender()
 end
 
 function COMPONENT_PARTICLE:Render()
+    local p = self.Entity.Position
 
-    if not self.KeepLocal then
-        love.graphics.draw(
-            self.System,
-            0,
-            0,
-            0 -- self.Entity.Orientation -- Unsupported atm.
-            )
-    else
-        local p = self.Entity.Position
-
-        love.graphics.draw(
-            self.System,
-            p[1],
-            p[2],
-            self.Entity.Orientation
-            )
+    for i,s in ipairs(self.Systems) do
+        if not self.KeepLocalTable[i] then
+            love.graphics.draw(
+                s,
+                0,
+                0,
+                0 -- self.Entity.Orientation -- Unsupported atm.
+                )
+        else
+            love.graphics.draw(
+                s,
+                p[1],
+                p[2],
+                self.Entity.Orientation
+                )
+        end
     end
 end
 
-function COMPONENT_PARTICLE:SetKeepLocal(kl)
-    self.KeepLocal = kl
-end
-
-function COMPONENT_PARTICLE:AddParticleSystem(ps)
-    self.System = ps
+function COMPONENT_PARTICLE:AddParticleSystem(ps,keep_local)
+    table.insert(self.Systems, ps)
+    table.insert(self.KeepLocalTable, keep_local)
 end

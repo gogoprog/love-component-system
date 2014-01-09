@@ -20,8 +20,7 @@ local descriptions ={
             Dynamic = true
         },
         PARTICLE = {
-            Layer = 2,
-            KeepLocal = false
+            Layer = 2
         }
     },
     Ground = {
@@ -83,10 +82,8 @@ function love.load()
     heart1 = HEART(descriptions.Object,{-200,-200})
     heart2 = HEART(descriptions.Object,{200,-200})
 
-    heart1:AddParticleSystem(ps)
-    heart2:AddParticleSystem(ps2)
-
-    heart2:SetKeepLocal(true)
+    heart1:AddParticleSystem(ps,false)
+    heart2:AddParticleSystem(ps2,true)
 end
 
 function love.update(dt)

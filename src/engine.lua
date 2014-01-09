@@ -8,8 +8,12 @@ require 'lcs.component_physic_world'
 require 'lcs.component_camera'
 require 'lcs.component_text'
 require 'lcs.component_particle'
+require 'lcs.component_sprite_batch'
+require 'lcs.component_static_sprite'
+
 
 require 'lcs.animation'
+require 'lcs.sprite_sheet'
 
 ENGINE = {
     Renderables = {}

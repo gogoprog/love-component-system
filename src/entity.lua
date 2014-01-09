@@ -91,14 +91,6 @@ ENTITY = entity_class(function(o,components,position)
                 component = constructor(properties,o)
             end
 
-            if component.Initialize then
-                component:Initialize()
-            end
-
-            if component.Register then
-                component:Register()
-            end
-
             table.insert(o.Components, component)
         end
     end
