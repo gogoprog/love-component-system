@@ -14,6 +14,8 @@ function ANIMATION.Create(name, parameters)
     local height = parameters.CellHeight
     local cells_per_lines = sw / width
 
+    print(cells_per_lines)
+
     item.CellWidth = parameters.CellWidth
     item.CellHeight = parameters.CellHeight
     item.Source = parameters.Source
