@@ -8,12 +8,21 @@ PLAYER = entity_class(function(o,x,y,level)
                 Extent = {32,32},
                 Layer = 1
             }
+        },
+        {
+            Type = "PHYSIC",
+            Properties = {
+                Shape = "rectangle",
+                Extent = {32,32},
+                Dynamic = false
+            }
         }
     }
 
     ENTITY.Init(o,description,{x,y})
 
     o.Level = level
+    o.Colliding = false
 end)
 
 function PLAYER.Load()
@@ -34,28 +43,39 @@ function PLAYER:Update(dt)
     local speed = 128
     local p = self.Position
 
-    if kb.isDown('right') then
-        move[1] = move[1] + speed * dt
-    end
+    if not self.Colliding then
 
-    if kb.isDown('left') then
-        move[1] = move[1] - speed * dt
-    end
+        if kb.isDown('right') then
+            move[1] = move[1] + speed * dt
+        end
 
-    if kb.isDown('up') then
-        move[2] = move[2] - speed * dt
-    end
+        if kb.isDown('left') then
+            move[1] = move[1] - speed * dt
+        end
 
-    if kb.isDown('down') then
-        move[2] = move[2] + speed * dt
-    end
+        if kb.isDown('up') then
+            move[2] = move[2] - speed * dt
+        end
 
-    if move[1] ~= 0 or move[2] ~= 0 then
+        if kb.isDown('down') then
+            move[2] = move[2] + speed * dt
+        end
 
-        if self.Level.World:RayTestFirst(p[1],p[2],p[1]+move[1],p[2]+move[2]) then
-        else
+        if move[1] ~= 0 or move[2] ~= 0 then
+            self.LastPosition = {p[1],p[2]}
             p[1] = p[1] + move[1]
             p[2] = p[2] + move[2]
         end
+    else
+        self.Position = {self.LastPosition[1],self.LastPosition[2]}
     end
+end
+
+function PLAYER:OnCollisionBegin()
+    self.Colliding = true
+end
+
+
+function PLAYER:OnCollisionEnd()
+    self.Colliding = false
 end

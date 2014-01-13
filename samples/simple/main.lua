@@ -46,16 +46,13 @@ HEART = entity_class(function(o,d,p)
     ENTITY.Init(o,d,p)
 end)
 
-function HEART:OnCollisionStart()
+function HEART:OnCollisionBegin()
     self:ApplyLinearImpulse(0, -3000)
 end
 
 GROUND = entity_class(function(o,d,p)
     ENTITY.Init(o,d,p)
 end)
-
-function GROUND:OnCollisionStart()
-end
 
 -- Callbacks
 
