@@ -1,19 +1,19 @@
 require 'lcs.class'
 
 local COMPONENT_PHYSIC_Init = {
-    circle = function(o,parameters,x,y)
-        o.Body = love.physics.newBody(parameters.World, x, y, "dynamic")
+    circle = function(o,parameters,x,y,dyn)
+        o.Body = love.physics.newBody(parameters.World, x, y, dyn and "dynamic" or nil)
         o.Shape = love.physics.newCircleShape(parameters.Radius)
     end,
-    rectangle = function(o,parameters,x,y)
-        o.Body = love.physics.newBody(parameters.World, x, y)
+    rectangle = function(o,parameters,x,y,dyn)
+        o.Body = love.physics.newBody(parameters.World, x, y, dyn and "dynamic" or nil)
         o.Shape = love.physics.newRectangleShape(parameters.Extent[1], parameters.Extent[2])
     end
 }
 
 COMPONENT_PHYSIC = class(function(o,parameters,entity)
     parameters.World = parameters.World or COMPONENT_PHYSIC_WORLD.DefaultWorld
-    COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2])
+    COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2],parameters.Dynamic or true)
     o.Fixture = love.physics.newFixture(o.Body, o.Shape)
     o.Fixture:setUserData(entity)
     o.Dynamic = parameters.Dynamic

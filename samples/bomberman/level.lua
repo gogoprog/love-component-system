@@ -3,12 +3,17 @@ LEVEL = class(function(o)
 
     o.SpriteSheet:AddQuad("grass",0,20,1,1)
     o.SpriteSheet:AddQuad("tree",2,20,1,1)
-    o.SpriteSheet:AddQuad("building",0,10,4,5)
+    o.SpriteSheet:AddQuad("block",3,0,1,1)
 end)
 
 function LEVEL:Initialize()
     local descriptions = {
         World = {
+            {
+                Type = "PHYSIC_WORLD",
+                Properties = {
+                }
+            },
             {
                 Type = "SPRITE_BATCH",
                 Properties = {
@@ -21,6 +26,21 @@ function LEVEL:Initialize()
                 Type = "STATIC_SPRITE",
                 Properties = {
                     Quad = self.SpriteSheet:GetQuad("grass")
+                }
+            }
+        },
+        Block = {
+            {
+                Type = "STATIC_SPRITE",
+                Properties = {
+                    Quad = self.SpriteSheet:GetQuad("block")
+                }
+            },
+            {
+                Type = "PHYSIC",
+                Properties = {
+                    Shape = "rectangle",
+                    Extent = {32,32}
                 }
             }
         }
@@ -37,6 +57,8 @@ function LEVEL:Initialize()
             self.World.SpriteBatch:add(grass_quad,x,y)
         end
     end
+
+    ENTITY(descriptions.Block,{256,256})
 
     self.World:Unbind()
 end
