@@ -2,6 +2,7 @@ require 'level'
 require 'player'
 require 'bomb'
 require 'explosion'
+require 'camera'
 
 GAME = class(function(o)
     o.Grid = {}
@@ -14,6 +15,7 @@ function GAME:Initialize()
     self.Level = LEVEL()
     self.Level:Initialize(self)
     self.Player = PLAYER(74,64,self)
+    self.Camera = CAMERA()
 end
 
 function GAME:Update(dt)
@@ -64,5 +66,6 @@ end
 
 function GAME:StartExplosion(gx,gy)
     EXPLOSION(gx,gy,self,"all")
+    self.Camera:Shake(1)
 end
 
