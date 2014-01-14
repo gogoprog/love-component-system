@@ -78,12 +78,3 @@ function PLAYER:Update(dt)
         self.Game:PlaceBomb(p[1],p[2])
     end
 end
-
-function PLAYER:OnCollisionBegin()
-    --self.Colliding = true
-end
-
-
-function PLAYER:OnCollisionEnd()
-    --self.Colliding = false
-end

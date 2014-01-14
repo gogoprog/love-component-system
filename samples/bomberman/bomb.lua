@@ -27,7 +27,8 @@ function BOMB:Update(dt)
     self.TimeLeft = self.TimeLeft - dt
 
     if self.TimeLeft <= 0 then
-        self.Game:RemoveGridItem(self.GridX, self.GridY)
+        self.Game:StartExplosion(self.GridX,self.GridY)
+        self.Game:RemoveItem(self.GridX, self.GridY)
         self:Destroy()
     end
 end

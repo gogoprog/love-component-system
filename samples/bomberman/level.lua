@@ -8,7 +8,7 @@ LEVEL = class(function(o)
     o.CellSize = 32
 end)
 
-function LEVEL:Initialize()
+function LEVEL:Initialize(game)
     local descriptions = {
         World = {
             {
@@ -63,18 +63,21 @@ function LEVEL:Initialize()
     for x=32,768,96 do
         for y=32,512,96 do
             ENTITY(descriptions.Block,{x,y})
+            game:BlockGrid(x,y)
         end
     end
 
     for x=32,768,32 do
         for y=32,600,512 do
             ENTITY(descriptions.Block,{x,y})
+            game:BlockGrid(x,y)
         end
     end
 
     for y=32,512,32 do
         for x=32,768,736 do
             ENTITY(descriptions.Block,{x,y})
+            game:BlockGrid(x,y)
         end
     end
 
