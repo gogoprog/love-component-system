@@ -108,8 +108,18 @@ function LEVEL:GetCorrectedPosition(x,y)
     local rx,ry
     local cs = self.CellSize
 
-    rx = math.floor(x / cs) * cs
-    ry = math.floor(y / cs) * cs
+    rx = math.floor((x+cs/2) / cs) * cs
+    ry = math.floor((y+cs/2) / cs) * cs
+
+    return rx,ry
+end
+
+function LEVEL:GetGridPosition(x,y)
+    local rx,ry
+    local cs = self.CellSize
+
+    rx = math.floor((x+cs/2) / cs)
+    ry = math.floor((y+cs/2) / cs)
 
     return rx,ry
 end

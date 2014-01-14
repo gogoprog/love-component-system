@@ -1,5 +1,4 @@
-
-PLAYER = entity_class(function(o,x,y,level)
+PLAYER = entity_class(function(o,x,y,game)
     local description = {
         {
             Type = "ANIMATED_SPRITE",
@@ -13,8 +12,10 @@ PLAYER = entity_class(function(o,x,y,level)
 
     ENTITY.Init(o,description,{x,y})
 
+    local level = game.Level
     o.Level = level
     o.Colliding = false
+    o.Game = game
 
     local cx,cy = level:GetCorrectedPosition(x,y)
     o.Position = {cx,cy}
@@ -71,6 +72,10 @@ function PLAYER:Update(dt)
         end
     else
         self.Position = {self.LastPosition[1],self.LastPosition[2]}
+    end
+
+    if kb.isDown('b') then
+        self.Game:PlaceBomb(p[1],p[2])
     end
 end
 
