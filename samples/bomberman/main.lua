@@ -4,7 +4,8 @@ require 'game'
 
 local game = GAME()
 
-function love.load()
+function love.load(arg)
+    ENGINE.Initialize(arg)
     game:Initialize()
 end
 

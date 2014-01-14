@@ -4,7 +4,7 @@ COMPONENT_STATIC_SPRITE = class(function(o,parameters,entity)
     o.Quad = parameters.Quad
     o.Entity = entity
     local p = entity.Position
-    local x,h,w,h = o.Quad:getViewport()
+    local x,y,w,h = o.Quad:getViewport()
 
     COMPONENT_SPRITE_BATCH.Current:add(
         parameters.Quad,

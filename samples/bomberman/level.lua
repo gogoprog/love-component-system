@@ -59,6 +59,53 @@ function LEVEL:Initialize()
     end
 
     ENTITY(descriptions.Block,{256,256})
+    ENTITY(descriptions.Block,{256,288})
+    ENTITY(descriptions.Block,{256,320})
+
 
     self.World:Unbind()
+end
+
+
+function LEVEL:Collides(x,y,w,h)
+    local x1,y1,x2,y2
+    local hw, hh = w*0.5, h*0.5
+
+    x1 = x - hw
+    y1 = y - hh
+    x2 = x + hw
+    y2 = y1
+
+    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+        return true
+    end
+
+    x1 = x - hw
+    y1 = y - hh
+    x2 = x1
+    y2 = y + hh
+
+    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+        return true
+    end
+
+    x1 = x - hw
+    y1 = y + hh
+    x2 = x + hw
+    y2 = y1
+
+    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+        return true
+    end
+
+    x1 = x + hw
+    y1 = y - hh
+    x2 = x1
+    y2 = y + hh
+
+    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+        return true
+    end
+
+    return false
 end

@@ -8,14 +8,6 @@ PLAYER = entity_class(function(o,x,y,level)
                 Extent = {32,32},
                 Layer = 1
             }
-        },
-        {
-            Type = "PHYSIC",
-            Properties = {
-                Shape = "rectangle",
-                Extent = {32,32},
-                Dynamic = false
-            }
         }
     }
 
@@ -63,8 +55,15 @@ function PLAYER:Update(dt)
 
         if move[1] ~= 0 or move[2] ~= 0 then
             self.LastPosition = {p[1],p[2]}
-            p[1] = p[1] + move[1]
-            p[2] = p[2] + move[2]
+            
+            if not self.Level:Collides(p[1]+move[1],p[2]+move[2],32,32) then
+                p[1] = p[1] + move[1]
+                p[2] = p[2] + move[2]
+            elseif not self.Level:Collides(p[1]+move[1],p[2],32,32) then
+                p[1] = p[1] + move[1]
+            elseif not self.Level:Collides(p[1],p[2]+move[2],32,32) then
+                p[2] = p[2] + move[2]
+            end
         end
     else
         self.Position = {self.LastPosition[1],self.LastPosition[2]}
@@ -72,10 +71,10 @@ function PLAYER:Update(dt)
 end
 
 function PLAYER:OnCollisionBegin()
-    self.Colliding = true
+    --self.Colliding = true
 end
 
 
 function PLAYER:OnCollisionEnd()
-    self.Colliding = false
+    --self.Colliding = false
 end
