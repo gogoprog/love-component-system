@@ -4,6 +4,8 @@ LEVEL = class(function(o)
     o.SpriteSheet:AddQuad("grass",0,20,1,1)
     o.SpriteSheet:AddQuad("tree",2,20,1,1)
     o.SpriteSheet:AddQuad("block",3,0,1,1)
+
+    o.CellSize = 32
 end)
 
 function LEVEL:Initialize()
@@ -58,10 +60,23 @@ function LEVEL:Initialize()
         end
     end
 
-    ENTITY(descriptions.Block,{256,256})
-    ENTITY(descriptions.Block,{256,288})
-    ENTITY(descriptions.Block,{256,320})
+    for x=32,768,96 do
+        for y=32,512,96 do
+            ENTITY(descriptions.Block,{x,y})
+        end
+    end
 
+    for x=32,768,32 do
+        for y=32,600,512 do
+            ENTITY(descriptions.Block,{x,y})
+        end
+    end
+
+    for y=32,512,32 do
+        for x=32,768,736 do
+            ENTITY(descriptions.Block,{x,y})
+        end
+    end
 
     self.World:Unbind()
 end
@@ -87,4 +102,14 @@ function LEVEL:Collides(x,y,w,h)
     end
 
     return false
+end
+
+function LEVEL:GetCorrectedPosition(x,y)
+    local rx,ry
+    local cs = self.CellSize
+
+    rx = math.floor(x / cs) * cs
+    ry = math.floor(y / cs) * cs
+
+    return rx,ry
 end

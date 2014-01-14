@@ -15,6 +15,9 @@ PLAYER = entity_class(function(o,x,y,level)
 
     o.Level = level
     o.Colliding = false
+
+    local cx,cy = level:GetCorrectedPosition(x,y)
+    o.Position = {cx,cy}
 end)
 
 function PLAYER.Load()
@@ -34,6 +37,7 @@ function PLAYER:Update(dt)
     local move = {0,0}
     local speed = 128
     local p = self.Position
+    local colsize = 28
 
     if not self.Colliding then
 
@@ -56,12 +60,12 @@ function PLAYER:Update(dt)
         if move[1] ~= 0 or move[2] ~= 0 then
             self.LastPosition = {p[1],p[2]}
             
-            if not self.Level:Collides(p[1]+move[1],p[2]+move[2],32,32) then
+            if not self.Level:Collides(p[1]+move[1],p[2]+move[2],colsize,colsize) then
                 p[1] = p[1] + move[1]
                 p[2] = p[2] + move[2]
-            elseif not self.Level:Collides(p[1]+move[1],p[2],32,32) then
+            elseif not self.Level:Collides(p[1]+move[1],p[2],colsize,colsize) then
                 p[1] = p[1] + move[1]
-            elseif not self.Level:Collides(p[1],p[2]+move[2],32,32) then
+            elseif not self.Level:Collides(p[1],p[2]+move[2],colsize,colsize) then
                 p[2] = p[2] + move[2]
             end
         end

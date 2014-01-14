@@ -9,7 +9,7 @@ function GAME:Initialize()
     PLAYER.Load()
     self.Level = LEVEL()
     self.Level:Initialize()
-    self.Player = PLAYER(400,300,self.Level)
+    self.Player = PLAYER(74,64,self.Level)
 end
 
 function GAME:Update(dt)
