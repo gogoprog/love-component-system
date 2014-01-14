@@ -58,7 +58,8 @@ end)
 
 local heart1, heart2
 
-function love.load()
+function love.load(arg)
+    ENGINE.Initialize(arg)
 
     local ps = love.graphics.newParticleSystem(texture, 30)
     ps:setEmissionRate(30)

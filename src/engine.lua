@@ -11,13 +11,16 @@ require 'lcs.component_particle'
 require 'lcs.component_sprite_batch'
 require 'lcs.component_static_sprite'
 
-
 require 'lcs.animation'
 require 'lcs.sprite_sheet'
 
 ENGINE = {
     Renderables = {}
 }
+
+function ENGINE.Initialize(arg)
+    if arg[#arg] == "-debug" then require("mobdebug").start() end
+end
 
 function ENGINE.Update(dt)
     ENTITY.UpdateAll(dt)
