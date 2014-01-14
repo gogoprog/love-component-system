@@ -8,7 +8,7 @@ COMPONENT_STATIC_SPRITE = class(function(o,parameters,entity)
 
     COMPONENT_SPRITE_BATCH.Current:add(
         parameters.Quad,
-        p[1],p[2],
+        p[1], p[2],
         entity.Orientation,
         1, 1,
         w * 0.5,

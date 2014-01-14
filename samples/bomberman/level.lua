@@ -68,42 +68,21 @@ end
 
 
 function LEVEL:Collides(x,y,w,h)
-    local x1,y1,x2,y2
     local hw, hh = w*0.5, h*0.5
 
-    x1 = x - hw
-    y1 = y - hh
-    x2 = x + hw
-    y2 = y1
-
-    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+    if self.World:RayTestFirst(x,y,x - hw,y - hh) ~= nil then
         return true
     end
 
-    x1 = x - hw
-    y1 = y - hh
-    x2 = x1
-    y2 = y + hh
-
-    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+    if self.World:RayTestFirst(x,y,x + hw,y - hh) ~= nil then
         return true
     end
 
-    x1 = x - hw
-    y1 = y + hh
-    x2 = x + hw
-    y2 = y1
-
-    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+    if self.World:RayTestFirst(x,y,x-hw,y+hh) ~= nil then
         return true
     end
 
-    x1 = x + hw
-    y1 = y - hh
-    x2 = x1
-    y2 = y + hh
-
-    if self.World:RayTestFirst(x1,y1,x2,y2) ~= nil then
+    if self.World:RayTestFirst(x,y,x+hw,y+hh) ~= nil then
         return true
     end
 
