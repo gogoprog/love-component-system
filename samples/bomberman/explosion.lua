@@ -17,7 +17,7 @@ EXPLOSION = entity_class(function(o,gx,gy,game,propagation)
     o.Propagation = propagation
     o.PropagationIsDone = false
 
-    local ps = love.graphics.newParticleSystem(EXPLOSION.Texture, 30)
+    local ps = love.graphics.newParticleSystem(TEXTURE.Get("cloud"), 30)
     ps:setEmissionRate(10)
     ps:setParticleLifetime(0.5)
     ps:setEmitterLifetime(0.8)
@@ -27,10 +27,6 @@ EXPLOSION = entity_class(function(o,gx,gy,game,propagation)
 
     o:AddParticleSystem(ps,false)
 end)
-
-function EXPLOSION.Load()
-    EXPLOSION.Texture = love.graphics.newImage("data/cloud.png")
-end
 
 function EXPLOSION:Update(dt)
     self.TimeLeft = self.TimeLeft - dt

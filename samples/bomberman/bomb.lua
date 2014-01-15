@@ -3,7 +3,7 @@ BOMB = entity_class(function(o,x,y,game,gx,gy)
         {
             Type = "SPRITE",
             Properties = {
-                Texture = BOMB.Texture,
+                Texture = TEXTURE.Get("bomb"),
                 Extent = {32,32},
                 Layer = 1
             }
@@ -16,10 +16,6 @@ BOMB = entity_class(function(o,x,y,game,gx,gy)
     o.GridY = gy
     o.TimeLeft = 2
 end)
-
-function BOMB.Load()
-    BOMB.Texture = love.graphics.newImage("data/bomb.png")
-end
 
 function BOMB:Update(dt)
     self.Orientation = self.Orientation + dt * 6

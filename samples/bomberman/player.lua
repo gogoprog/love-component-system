@@ -21,18 +21,6 @@ PLAYER = entity_class(function(o,x,y,game)
     o.Position = {cx,cy}
 end)
 
-function PLAYER.Load()
-    local source = love.graphics.newImage("data/man.png")
-
-    ANIMATION.Create("idle",{
-        Source = source,
-        CellWidth = 32,
-        CellHeight = 32,
-        Frames = { 0,1,2 },
-        FrameRate = 8
-        })
-end
-
 function PLAYER:Update(dt)
     local kb = love.keyboard
     local move = {0,0}

@@ -6,7 +6,8 @@ local game = GAME()
 
 function love.load(arg)
     ENGINE.Initialize(arg)
-    game:Initialize()
+    game:Load()
+    game:NewGame()
 end
 
 function love.update(dt)

@@ -11,6 +11,7 @@ require 'lcs.component_particle'
 require 'lcs.component_sprite_batch'
 require 'lcs.component_static_sprite'
 
+require 'lcs.texture'
 require 'lcs.animation'
 require 'lcs.sprite_sheet'
 

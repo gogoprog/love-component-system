@@ -8,10 +8,24 @@ GAME = class(function(o)
     o.Grid = {}
 end)
 
-function GAME:Initialize()
-    BOMB.Load()
-    PLAYER.Load()
-    EXPLOSION.Load()
+function GAME:Load()
+    TEXTURE.Load("bomb","data/bomb.png")
+
+    TEXTURE.Load("man","data/man.png")
+
+    ANIMATION.Create("idle",{
+        Source = TEXTURE.Get("man"),
+        CellWidth = 32,
+        CellHeight = 32,
+        Frames = { 0,1,2 },
+        FrameRate = 8
+        })
+
+    TEXTURE.Load("cloud","data/cloud.png")
+end
+
+function GAME:NewGame()
+    ENTITY.DestroyAll()
     self.Level = LEVEL()
     self.Level:Initialize(self)
     self.Player = PLAYER(74,64,self)
