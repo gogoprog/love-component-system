@@ -2,18 +2,11 @@ require 'lcs.class'
 require 'lcs.animation'
 
 COMPONENT_ANIMATED_SPRITE = class(function(o,parameters,entity)
-    local anim = ANIMATION(parameters.Animation)
-    o.Animations = { anim }
-    o.Animation = anim
     o.Layer = parameters.Layer or 1
     o.Entity = entity
-    local cw = parameters.Animation.CellWidth
-    local ch = parameters.Animation.CellHeight
-    o.OffsetX = cw * 0.5
-    o.OffsetY = ch * 0.5
     o.Extent = parameters.Extent or {cw, ch}
-    o.ScaleFactorX = o.Extent[1] / cw
-    o.ScaleFactorY = o.Extent[2] / ch
+
+    o:SetAnimation(parameters.Animation)
 end)
 
 -- METHODS
@@ -29,4 +22,22 @@ end
 function COMPONENT_ANIMATED_SPRITE:Render()
     local p = self.Entity.Position
     self.Animation:Render(p[1],p[2],self.Entity.Orientation,self.ScaleFactorX,self.ScaleFactorY,self.OffsetX, self.OffsetY)
+end
+
+function COMPONENT_ANIMATED_SPRITE:SetAnimation(data)
+    if self.Animation and self.Animation.Data == data then
+        return
+    end
+
+    local anim = ANIMATION(data)
+    self.Animations = { anim }
+    self.Animation = anim
+
+    local cw = data.CellWidth
+    local ch = data.CellHeight
+    self.OffsetX = cw * 0.5
+    self.OffsetY = ch * 0.5
+    self.Extent = self.Extent or {cw, ch}
+    self.ScaleFactorX = self.Extent[1] / cw
+    self.ScaleFactorY = self.Extent[2] / ch
 end
