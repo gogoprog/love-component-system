@@ -1,4 +1,4 @@
-EXPLOSION = entity_class(function(o,gx,gy,game,propagation)
+EXPLOSION = entity_class(function(o,gx,gy,game,propagation,size)
     local description = {
         {
             Type = "PARTICLE",
@@ -16,6 +16,7 @@ EXPLOSION = entity_class(function(o,gx,gy,game,propagation)
     o.PropagationTimeLeft = 0.1
     o.Propagation = propagation
     o.PropagationIsDone = false
+    o.PropagationSize = size
 
     local ps = love.graphics.newParticleSystem(TEXTURE.Get("cloud"), 30)
     ps:setEmissionRate(10)
@@ -32,31 +33,32 @@ function EXPLOSION:Update(dt)
     self.TimeLeft = self.TimeLeft - dt
     self.PropagationTimeLeft = self.PropagationTimeLeft - dt
 
-    if self.PropagationIsDone == false then
+    if self.PropagationIsDone == false and self.PropagationSize > 0 then
         if self.PropagationTimeLeft <= 0 then
             self.PropagationIsDone = true
             local game = self.Game
             local gx,gy = self.GridX, self.GridY
+            local ps = self.PropagationSize - 1
 
             if self.Propagation == "all" then
                 local px,py = 0,0
 
                 for px = -1,1,2 do
                     if self.Game:IsPlaceFree(gx+px,gy+py) then
-                        EXPLOSION(gx+px,gy+py,game,{px,py})
+                        EXPLOSION(gx+px,gy+py,game,{px,py},ps)
                     end
                 end
 
                 for py = -1,1,2 do
                     if self.Game:IsPlaceFree(gx+px,gy+py) then
-                        EXPLOSION(gx+px,gy+py,game,{px,py})
+                        EXPLOSION(gx+px,gy+py,game,{px,py},ps)
                     end
                 end
 
             else
                 local px,py = self.Propagation[1], self.Propagation[2]
                 if self.Game:IsPlaceFree(gx+px,gy+py) then
-                    EXPLOSION(gx+px,gy+py,game,{px,py})
+                    EXPLOSION(gx+px,gy+py,game,{px,py},ps)
                 end
             end
         end

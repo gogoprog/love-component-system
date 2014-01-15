@@ -94,12 +94,12 @@ function GAME:RemoveItem(gx,gy)
    self.Grid[gx][gy] = nil
 end
 
-function GAME:PlaceBomb(x,y)
+function GAME:PlaceBomb(x,y,size)
     local lvl = self.Level
     local gx,gy = lvl:GetGridPosition(x,y)
 
     if self:IsPlaceFree(gx,gy) then
-        self:PlaceItem(gx,gy, BOMB(gx * lvl.CellSize, gy * lvl.CellSize, self, gx, gy))
+        self:PlaceItem(gx,gy, BOMB(gx * lvl.CellSize, gy * lvl.CellSize, self, gx, gy, size))
     end
 end
 
@@ -110,8 +110,8 @@ function GAME:BlockGrid(x,y)
     self:PlaceItem(gx,gy,"blocked")
 end
 
-function GAME:StartExplosion(gx,gy)
-    EXPLOSION(gx,gy,self,"all")
+function GAME:StartExplosion(gx,gy,size)
+    EXPLOSION(gx,gy,self,"all",size)
     self.Camera:Shake(1)
 end
 

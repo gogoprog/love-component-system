@@ -69,6 +69,10 @@ function PLAYER:Update(dt)
     end
 
     if kb.isDown('b') then
-        self.Game:PlaceBomb(p[1],p[2])
+        self.Game:PlaceBomb(p[1],p[2],1)
+    end
+
+    if kb.isDown('v') then
+        self.Game:PlaceBomb(p[1],p[2],10)
     end
 end

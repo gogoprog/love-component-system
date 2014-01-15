@@ -1,4 +1,4 @@
-BOMB = entity_class(function(o,x,y,game,gx,gy)
+BOMB = entity_class(function(o,x,y,game,gx,gy, size)
     local description = {
         {
             Type = "SPRITE",
@@ -14,6 +14,7 @@ BOMB = entity_class(function(o,x,y,game,gx,gy)
     o.Game = game
     o.GridX = gx
     o.GridY = gy
+    o.Size = size
     o.TimeLeft = 2
 end)
 
@@ -23,7 +24,7 @@ function BOMB:Update(dt)
     self.TimeLeft = self.TimeLeft - dt
 
     if self.TimeLeft <= 0 then
-        self.Game:StartExplosion(self.GridX,self.GridY)
+        self.Game:StartExplosion(self.GridX,self.GridY,self.Size)
         self.Game:RemoveItem(self.GridX, self.GridY)
         self:Destroy()
     end
