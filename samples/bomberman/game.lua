@@ -17,7 +17,39 @@ function GAME:Load()
         Source = TEXTURE.Get("man"),
         CellWidth = 32,
         CellHeight = 32,
+        Frames = { 1 },
+        FrameRate = 8
+        })
+
+    ANIMATION.Create("move_down",{
+        Source = TEXTURE.Get("man"),
+        CellWidth = 32,
+        CellHeight = 32,
         Frames = { 0,1,2 },
+        FrameRate = 8
+        })
+
+    ANIMATION.Create("move_up",{
+        Source = TEXTURE.Get("man"),
+        CellWidth = 32,
+        CellHeight = 32,
+        Frames = { 36,37,38 },
+        FrameRate = 8
+        })
+
+    ANIMATION.Create("move_left",{
+        Source = TEXTURE.Get("man"),
+        CellWidth = 32,
+        CellHeight = 32,
+        Frames = { 12,13,14 },
+        FrameRate = 8
+        })
+
+    ANIMATION.Create("move_right",{
+        Source = TEXTURE.Get("man"),
+        CellWidth = 32,
+        CellHeight = 32,
+        Frames = { 24,25,26 },
         FrameRate = 8
         })
 

@@ -23,4 +23,8 @@ function love.keypressed(key)
     if key == "escape" then
         love.event.push("quit")
     end
+
+    if key == "f1" then
+        game:NewGame()
+    end
 end
