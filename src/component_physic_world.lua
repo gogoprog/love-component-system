@@ -9,7 +9,7 @@ COMPONENT_PHYSIC_WORLD = class(function(o,parameters,entity)
     o.TimeSum = 0
     o.Entity = entity
     o.Entity.World = o.World
-    COMPONENT_PHYSIC_WORLD.DefaultWorld = COMPONENT_PHYSIC_WORLD.DefaultWorld or o.World
+    COMPONENT_PHYSIC_WORLD.DefaultWorld = COMPONENT_PHYSIC_WORLD.DefaultWorld or o
 end)
 
 -- FUNCTIONS
@@ -38,6 +38,13 @@ function COMPONENT_PHYSIC_WORLD.RayCastFirst(fixture, x, y, xn, yn, fraction)
 end
 
 -- METHODS
+
+function COMPONENT_PHYSIC_WORLD:Unregister()
+    if COMPONENT_PHYSIC_WORLD.DefaultWorld == self then
+        COMPONENT_PHYSIC_WORLD.DefaultWorld = nil
+    end
+    self.World:destroy()
+end
 
 function COMPONENT_PHYSIC_WORLD:Update(dt)
     self.TimeSum = self.TimeSum + dt

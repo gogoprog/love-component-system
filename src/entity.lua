@@ -154,6 +154,7 @@ function ENTITY:Register()
             v:Register()
         end
     end
+    self.ItIsRegistered = true
 end
 
 function ENTITY:Unregister()
@@ -162,6 +163,7 @@ function ENTITY:Unregister()
             v:Unregister()
         end
     end
+    self.ItIsRegistered = false
 end
 
 function ENTITY:InternalUpdate(dt)

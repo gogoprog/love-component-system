@@ -2,11 +2,11 @@ require 'lcs.class'
 
 local COMPONENT_PHYSIC_Init = {
     circle = function(o,parameters,x,y,dyn)
-        o.Body = love.physics.newBody(parameters.World, x, y, dyn and "dynamic" or nil)
+        o.Body = love.physics.newBody(parameters.World.World, x, y, dyn and "dynamic" or nil)
         o.Shape = love.physics.newCircleShape(parameters.Radius)
     end,
     rectangle = function(o,parameters,x,y,dyn)
-        o.Body = love.physics.newBody(parameters.World, x, y, dyn and "dynamic" or nil)
+        o.Body = love.physics.newBody(parameters.World.World, x, y, dyn and "dynamic" or nil)
         o.Shape = love.physics.newRectangleShape(parameters.Extent[1], parameters.Extent[2])
     end
 }
@@ -18,9 +18,17 @@ COMPONENT_PHYSIC = class(function(o,parameters,entity)
     o.Fixture:setUserData(entity)
     o.Dynamic = parameters.Dynamic
     o.Entity = entity
+    o.World = parameters.World
 end)
 
 -- METHODS
+
+function COMPONENT_PHYSIC:Unregister()
+    if self.World.ItIsRegistered then
+        self.Fixture:destroy()
+        self.Body:destroy()
+    end
+end
 
 function COMPONENT_PHYSIC:Update(dt)
     local position = self.Entity.Position
