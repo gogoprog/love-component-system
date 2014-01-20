@@ -60,8 +60,17 @@ function GAME:NewGame()
     ENTITY.DestroyAll()
     self.Level = LEVEL()
     self.Level:Initialize(self)
-    self.Player = PLAYER(74,64,self)
     self.Camera = CAMERA()
+    self.Players = {}
+
+    table.insert(self.Players, PLAYER(74,64,self))
+
+    table.insert(self.Players, PLAYER(274,364,self))
+    table.insert(self.Players, PLAYER(374,064,self))
+    table.insert(self.Players, PLAYER(474,464,self))
+    table.insert(self.Players, PLAYER(574,164,self))
+    table.insert(self.Players, PLAYER(674,364,self))
+
 end
 
 function GAME:Update(dt)
@@ -139,9 +148,11 @@ end
 function GAME:Explosion(gx,gy)
     local item = self:GetGridItem(gx,gy)
 
-    local px,py = self.Player:GetGridPosition()
+    for _,p in ipairs(self.Players) do
+        local px,py = p:GetGridPosition()
 
-    if px == gx and py == gy then
-        self.Player:Die()
+        if px == gx and py == gy then
+            p:Die()
+        end
     end
 end
