@@ -1,3 +1,5 @@
+require "block"
+
 LEVEL = class(function(o)
     o.SpriteSheet = SPRITE_SHEET.Get("main")
     o.CellSize = 32
@@ -75,6 +77,10 @@ function LEVEL:Initialize(game)
             game:BlockGrid(x,y)
         end
     end
+
+    game:PlaceBlock(3,4)
+    game:PlaceBlock(3,5)
+    game:PlaceBlock(3,6)
 
     self.World:Unbind()
 end

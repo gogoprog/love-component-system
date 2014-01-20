@@ -129,6 +129,13 @@ function GAME:PlaceBomb(x,y,size)
     end
 end
 
+function GAME:PlaceBlock(gx,gy)
+    local cs = self.Level.CellSize
+    local x,y = gx*cs, gy*cs
+
+    self:PlaceItem(gx,gy, BLOCK(x,y,self))
+end
+
 function GAME:BlockGrid(x,y)
     local lvl = self.Level
     local gx,gy = lvl:GetGridPosition(x,y)
@@ -147,8 +154,12 @@ function GAME:ContinueExplosion(gx,gy,size,px,py)
     if item == nil then
         EXPLOSION(gx,gy,self,{px,py},size)
     elseif type(item) == 'table' then
-        if item.ItIsBomb then
+        if item.ItIsBomb == true then
             item:Explode()
+        elseif item.ItIsDestroyable == true then
+            EXPLOSION(gx,gy,self,{0,0},1)
+            item:Destroy()
+            self:RemoveItem(gx,gy)
         end
     end
 end
