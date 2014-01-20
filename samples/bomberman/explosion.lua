@@ -44,22 +44,16 @@ function EXPLOSION:Update(dt)
                 local px,py = 0,0
 
                 for px = -1,1,2 do
-                    if self.Game:IsPlaceFree(gx+px,gy+py) then
-                        EXPLOSION(gx+px,gy+py,game,{px,py},ps)
-                    end
+                    self.Game:ContinueExplosion(gx+px,gy+py,ps,px,py)
                 end
 
                 for py = -1,1,2 do
-                    if self.Game:IsPlaceFree(gx+px,gy+py) then
-                        EXPLOSION(gx+px,gy+py,game,{px,py},ps)
-                    end
+                    self.Game:ContinueExplosion(gx+px,gy+py,ps,px,py)
                 end
 
             else
                 local px,py = self.Propagation[1], self.Propagation[2]
-                if self.Game:IsPlaceFree(gx+px,gy+py) then
-                    EXPLOSION(gx+px,gy+py,game,{px,py},ps)
-                end
+                self.Game:ContinueExplosion(gx+px,gy+py,ps,px,py)
             end
         end
     end

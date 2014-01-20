@@ -115,3 +115,8 @@ function GAME:StartExplosion(gx,gy,size)
     self.Camera:Shake(1)
 end
 
+function GAME:ContinueExplosion(gx,gy,size,px,py)
+    if self:IsPlaceFree(gx,gy) then
+        EXPLOSION(gx,gy,self,{px,py},size)
+    end
+end
