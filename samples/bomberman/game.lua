@@ -54,6 +54,14 @@ function GAME:Load()
         })
 
     TEXTURE.Load("cloud","data/cloud.png")
+
+    TEXTURE.Load("tile_set", "data/tile_set.png")
+
+    local ss = SPRITE_SHEET.Create("main",TEXTURE.Get("tile_set"),32,32)
+
+    ss:AddQuad("grass",0,20,1,1)
+    ss:AddQuad("tree",2,20,1,1)
+    ss:AddQuad("block",3,0,1,1)
 end
 
 function GAME:NewGame()

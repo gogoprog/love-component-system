@@ -23,14 +23,29 @@ end
 
 function COMPONENT_SPRITE:Render()
     local p = self.Entity.Position
-    love.graphics.draw(
-        self.Texture,
-        p[1],
-        p[2],
-        self.Entity.Orientation,
-        self.ScaleFactorX,
-        self.ScaleFactorY,
-        self.OffsetX,
-        self.OffsetY
-        )
+
+    if self.Quad then
+        love.graphics.draw(
+            self.Texture,
+            self.Quad,
+            p[1],
+            p[2],
+            self.Entity.Orientation,
+            self.ScaleFactorX,
+            self.ScaleFactorY,
+            self.OffsetX,
+            self.OffsetY
+            )
+    else
+        love.graphics.draw(
+            self.Texture,
+            p[1],
+            p[2],
+            self.Entity.Orientation,
+            self.ScaleFactorX,
+            self.ScaleFactorY,
+            self.OffsetX,
+            self.OffsetY
+            )
+    end
 end

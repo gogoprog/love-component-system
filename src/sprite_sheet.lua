@@ -7,6 +7,8 @@ SPRITE_SHEET = class(function(o, source, tile_width, tile_height)
     o.TileHeight = tile_height or 1
 end)
 
+SPRITE_SHEET.Items = {}
+
 function SPRITE_SHEET:AddQuad(name,x,y,w,h)
     local q
     local tile_width = self.TileWidth
@@ -20,4 +22,14 @@ end
 
 function SPRITE_SHEET:GetQuad(name)
     return self.Quads[name]
+end
+
+function SPRITE_SHEET.Create(name, source, tile_width, tile_height)
+    local obj = SPRITE_SHEET(source, tile_width, tile_height)
+    SPRITE_SHEET.Items[name] = obj
+    return obj
+end
+
+function SPRITE_SHEET.Get(name)
+    return SPRITE_SHEET.Items[name]
 end

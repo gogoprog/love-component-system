@@ -1,10 +1,5 @@
 LEVEL = class(function(o)
-    o.SpriteSheet = SPRITE_SHEET(love.graphics.newImage("data/tile_set.png"),32,32)
-
-    o.SpriteSheet:AddQuad("grass",0,20,1,1)
-    o.SpriteSheet:AddQuad("tree",2,20,1,1)
-    o.SpriteSheet:AddQuad("block",3,0,1,1)
-
+    o.SpriteSheet = SPRITE_SHEET.Get("main")
     o.CellSize = 32
 end)
 
