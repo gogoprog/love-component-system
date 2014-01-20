@@ -27,6 +27,8 @@ EXPLOSION = entity_class(function(o,gx,gy,game,propagation,size)
     ps:setSpin(20)
 
     o:AddParticleSystem(ps,false)
+
+    game:Explosion(gx,gy)
 end)
 
 function EXPLOSION:Update(dt)

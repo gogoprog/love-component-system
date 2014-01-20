@@ -135,3 +135,13 @@ function GAME:ContinueExplosion(gx,gy,size,px,py)
         end
     end
 end
+
+function GAME:Explosion(gx,gy)
+    local item = self:GetGridItem(gx,gy)
+
+    local px,py = self.Player:GetGridPosition()
+
+    if px == gx and py == gy then
+        self.Player:Die()
+    end
+end
