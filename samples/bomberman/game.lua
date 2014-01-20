@@ -80,6 +80,15 @@ function GAME:IsPlaceFree(gx,gy)
     return false
 end
 
+function GAME:GetGridItem(gx,gy)
+    if self.Grid[gx] == nil then
+        self.Grid[gx] = {}
+        return nil
+    end
+
+    return self.Grid[gx][gy]
+end
+
 function GAME:PlaceItem(gx,gy, what)
     if self.Grid[gx] == nil then
         self.Grid[gx] = {}
@@ -116,7 +125,13 @@ function GAME:StartExplosion(gx,gy,size)
 end
 
 function GAME:ContinueExplosion(gx,gy,size,px,py)
-    if self:IsPlaceFree(gx,gy) then
+    local item = self:GetGridItem(gx,gy)
+
+    if item == nil then
         EXPLOSION(gx,gy,self,{px,py},size)
+    elseif type(item) == 'table' then
+        if item.ItIsBomb then
+            item:Explode()
+        end
     end
 end
