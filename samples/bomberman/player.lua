@@ -29,7 +29,6 @@ function PLAYER:Update(dt)
         local move = {0,0}
         local speed = 128
         local p = self.Position
-        local colsize = 28
 
         if not self.Colliding then
 
@@ -55,14 +54,11 @@ function PLAYER:Update(dt)
 
             if move[1] ~= 0 or move[2] ~= 0 then
                 self.LastPosition = {p[1],p[2]}
-                
-                if not self.Level:Collides(p[1]+move[1],p[2]+move[2],colsize,colsize) then
-                    p[1] = p[1] + move[1]
-                    p[2] = p[2] + move[2]
-                elseif not self.Level:Collides(p[1]+move[1],p[2],colsize,colsize) then
-                    p[1] = p[1] + move[1]
-                elseif not self.Level:Collides(p[1],p[2]+move[2],colsize,colsize) then
-                    p[2] = p[2] + move[2]
+
+                if not self:TryMove(move[1], move[2]) then
+                    if not self:TryMove(move[1], 0) then
+                        self:TryMove(0, move[2])
+                    end
                 end
             else
                 self:SetAnimation(ANIMATION.Get("idle"))
@@ -93,4 +89,19 @@ end
 
 function PLAYER:Die()
     self.ItIsDead = true
+end
+
+function PLAYER:TryMove(ox,oy)
+    local p = self.Position
+    local colsize = 28
+    local result = self.Level:Collides(p[1]+ox,p[2]+oy,colsize,colsize)
+
+    if not result then
+        p[1] = p[1] + ox
+        p[2] = p[2] + oy
+
+        return true
+    end
+
+    return false
 end
