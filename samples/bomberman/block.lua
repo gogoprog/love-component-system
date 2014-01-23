@@ -14,7 +14,8 @@ BLOCK = entity_class(function(o,x,y)
             Type = "PHYSIC",
             Properties = {
                 Shape = "rectangle",
-                Extent = {32,32}
+                Extent = {32,32},
+                Type = "static"
             }
         }
     }
