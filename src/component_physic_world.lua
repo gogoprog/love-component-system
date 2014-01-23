@@ -37,6 +37,11 @@ function COMPONENT_PHYSIC_WORLD.RayCastFirst(fixture, x, y, xn, yn, fraction)
     return 0
 end
 
+function COMPONENT_PHYSIC_WORLD.RayCast(fixture, x, y, xn, yn, fraction)
+    table.insert(COMPONENT_PHYSIC_WORLD.Result,fixture:getUserData())
+    return 1
+end
+
 -- METHODS
 
 function COMPONENT_PHYSIC_WORLD:Unregister()
@@ -62,5 +67,11 @@ end
 function COMPONENT_PHYSIC_WORLD:RayTestFirst(x1,y1,x2,y2)
     COMPONENT_PHYSIC_WORLD.Result = nil
     self.World:rayCast(x1,y1,x2,y2, COMPONENT_PHYSIC_WORLD.RayCastFirst)
+    return COMPONENT_PHYSIC_WORLD.Result
+end
+
+function COMPONENT_PHYSIC_WORLD:RayTest(x1,y1,x2,y2)
+    COMPONENT_PHYSIC_WORLD.Result = {}
+    self.World:rayCast(x1,y1,x2,y2, COMPONENT_PHYSIC_WORLD.RayCast)
     return COMPONENT_PHYSIC_WORLD.Result
 end

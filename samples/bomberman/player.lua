@@ -96,7 +96,7 @@ function PLAYER:TryMove(ox,oy)
     local colsize = 28
     local result = self.Level:Collides(p[1]+ox,p[2]+oy,colsize,colsize)
 
-    if not result then
+    if #result == 0 then
         p[1] = p[1] + ox
         p[2] = p[2] + oy
 

@@ -89,29 +89,30 @@ end
 function LEVEL:Collides(x,y,w,h)
     local hw, hh = w*0.5, h*0.5
     local world = self.World
-    local result
+    local final_result = {}
+    local result = {}
 
-    result = world:RayTestFirst(x,y,x - hw,y - hh)
-    if result ~= nil then
-        return result
+    result = world:RayTest(x,y,x - hw,y - hh)
+    for k,_ in ipairs(result) do
+        final_result[k] = true
     end
 
-    result = world:RayTestFirst(x,y,x + hw,y - hh)
-    if result ~= nil then
-        return result
+    result = world:RayTest(x,y,x + hw,y - hh)
+    for k,_ in ipairs(result) do
+        final_result[k] = true
     end
 
-    result = world:RayTestFirst(x,y,x-hw,y+hh)
-    if result ~= nil then
-        return result
+    result = world:RayTest(x,y,x-hw,y+hh)
+    for k,_ in ipairs(result) do
+        final_result[k] = true
     end
 
-    result = world:RayTestFirst(x,y,x+hw,y+hh)
-    if result ~= nil then
-        return result
+    result = world:RayTest(x,y,x+hw,y+hh)
+    for k,_ in ipairs(result) do
+        final_result[k] = true
     end
 
-    return false
+    return final_result
 end
 
 function LEVEL:GetCorrectedPosition(x,y)
