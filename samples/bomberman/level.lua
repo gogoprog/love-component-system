@@ -39,7 +39,8 @@ function LEVEL:Initialize(game)
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {32,32}
+                    Extent = {32,32},
+                    Type = "static"
                 }
             }
         }
@@ -92,24 +93,24 @@ function LEVEL:Collides(x,y,w,h)
     local final_result = {}
     local result = {}
 
-    result = world:RayTest(x,y,x - hw,y - hh)
-    for k,_ in ipairs(result) do
-        final_result[k] = true
+    result = world:RayTest(x,y,x-hw,y-hh)
+    for _,v in ipairs(result) do
+        final_result[v] = true
     end
 
-    result = world:RayTest(x,y,x + hw,y - hh)
-    for k,_ in ipairs(result) do
-        final_result[k] = true
+    result = world:RayTest(x,y,x+hw,y-hh)
+    for _,v in ipairs(result) do
+        final_result[v] = true
     end
 
     result = world:RayTest(x,y,x-hw,y+hh)
-    for k,_ in ipairs(result) do
-        final_result[k] = true
+    for _,v in ipairs(result) do
+        final_result[v] = true
     end
 
     result = world:RayTest(x,y,x+hw,y+hh)
-    for k,_ in ipairs(result) do
-        final_result[k] = true
+    for _,v in ipairs(result) do
+        final_result[v] = true
     end
 
     return final_result

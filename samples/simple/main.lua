@@ -16,8 +16,7 @@ local descriptions ={
         },
         PHYSIC = {
             Shape = "circle",
-            Radius = 32,
-            Dynamic = true
+            Radius = 32
         },
         PARTICLE = {
             Layer = 2
@@ -31,7 +30,7 @@ local descriptions ={
         PHYSIC = {
             Shape = "rectangle",
             Extent = {600,60},
-            Dynamic = false
+            Type = "static"
         }
     },
     Camera = {

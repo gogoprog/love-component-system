@@ -1,22 +1,22 @@
 require 'lcs.class'
 
 local COMPONENT_PHYSIC_Init = {
-    circle = function(o,parameters,x,y,dyn)
-        o.Body = love.physics.newBody(parameters.World.World, x, y, dyn and "dynamic" or nil)
+    circle = function(o,parameters,x,y,typ)
+        o.Body = love.physics.newBody(parameters.World.World, x, y, typ or "dynamic")
         o.Shape = love.physics.newCircleShape(parameters.Radius)
     end,
     rectangle = function(o,parameters,x,y,dyn)
-        o.Body = love.physics.newBody(parameters.World.World, x, y, dyn and "dynamic" or nil)
+        o.Body = love.physics.newBody(parameters.World.World, x, y, typ or "dynamic")
         o.Shape = love.physics.newRectangleShape(parameters.Extent[1], parameters.Extent[2])
     end
 }
 
 COMPONENT_PHYSIC = class(function(o,parameters,entity)
     parameters.World = parameters.World or COMPONENT_PHYSIC_WORLD.DefaultWorld
-    COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2],parameters.Dynamic or true)
+    COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2],parameters.Type or "dynamic")
     o.Fixture = love.physics.newFixture(o.Body, o.Shape)
     o.Fixture:setUserData(entity)
-    o.Dynamic = parameters.Dynamic
+    o.Type = parameters.Type or "dynamic"
     o.Entity = entity
     o.World = parameters.World
 end)
@@ -33,7 +33,7 @@ end
 function COMPONENT_PHYSIC:Update(dt)
     local position = self.Entity.Position
 
-    if self.Dynamic == true then
+    if self.Type == "dynamic" then
         position[1] = self.Body:getX()
         position[2] = self.Body:getY()
         self.Entity.Orientation = self.Body:getAngle()

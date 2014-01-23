@@ -7,6 +7,14 @@ PLAYER = entity_class(function(o,x,y,game)
                 Extent = {32,32},
                 Layer = 1
             }
+        },
+        {
+            Type = "PHYSIC",
+            Properties = {
+                Shape = "rectangle",
+                Extent = {28,28},
+                Type = "kinematic"
+            }
         }
     }
 
@@ -96,12 +104,14 @@ function PLAYER:TryMove(ox,oy)
     local colsize = 28
     local result = self.Level:Collides(p[1]+ox,p[2]+oy,colsize,colsize)
 
-    if #result == 0 then
-        p[1] = p[1] + ox
-        p[2] = p[2] + oy
-
-        return true
+    for k,v in pairs(result) do
+        if k ~= self then
+            return false
+        end
     end
 
-    return false
+    p[1] = p[1] + ox
+    p[2] = p[2] + oy
+
+    return true
 end
