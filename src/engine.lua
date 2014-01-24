@@ -10,6 +10,9 @@ require 'lcs.component_text'
 require 'lcs.component_particle'
 require 'lcs.component_sprite_batch'
 require 'lcs.component_static_sprite'
+require 'lcs.component_bounding'
+require 'lcs.component_bounding_world'
+
 
 require 'lcs.texture'
 require 'lcs.animation'

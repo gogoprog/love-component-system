@@ -2,7 +2,7 @@ require 'lcs.class'
 
 COMPONENT_QUAD = class(function(o,parameters,entity)
     o.Extent = parameters.Extent
-    o.Color = parameters.Color
+    o.Color = parameters.Color or {255,255,255,255}
     o.Layer = parameters.Layer or 1
     o.Entity = entity
     o.OffsetX = o.Extent[1] * 0.5
@@ -19,6 +19,7 @@ function COMPONENT_QUAD:PreRender()
 end
 
 function COMPONENT_QUAD:Render()
+    love.graphics.setColor(self.Color)
     love.graphics.rectangle(
         "fill",
         self.Entity.Position[1] - self.OffsetX,
@@ -26,5 +27,9 @@ function COMPONENT_QUAD:Render()
         self.Extent[1],
         self.Extent[2]
         )
+end
+
+function COMPONENT_QUAD:SetQuadColor(color)
+    self.Color = color
 end
 
