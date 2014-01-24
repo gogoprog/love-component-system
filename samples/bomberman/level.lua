@@ -9,7 +9,7 @@ function LEVEL:Initialize(game)
     local descriptions = {
         World = {
             {
-                Type = "PHYSIC_WORLD",
+                Type = "BOUNDING_WORLD",
                 Properties = {
                 }
             },
@@ -36,11 +36,10 @@ function LEVEL:Initialize(game)
                 }
             },
             {
-                Type = "PHYSIC",
+                Type = "BOUNDING",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {32,32},
-                    Type = "static"
+                    Extent = {32,32}
                 }
             }
         }
@@ -84,36 +83,6 @@ function LEVEL:Initialize(game)
     game:PlaceBlock(3,6)
 
     self.World:Unbind()
-end
-
-
-function LEVEL:Collides(x,y,w,h)
-    local hw, hh = w*0.5, h*0.5
-    local world = self.World
-    local final_result = {}
-    local result = {}
-
-    result = world:RayTest(x,y,x-hw,y-hh)
-    for _,v in ipairs(result) do
-        final_result[v] = true
-    end
-
-    result = world:RayTest(x,y,x+hw,y-hh)
-    for _,v in ipairs(result) do
-        final_result[v] = true
-    end
-
-    result = world:RayTest(x,y,x-hw,y+hh)
-    for _,v in ipairs(result) do
-        final_result[v] = true
-    end
-
-    result = world:RayTest(x,y,x+hw,y+hh)
-    for _,v in ipairs(result) do
-        final_result[v] = true
-    end
-
-    return final_result
 end
 
 function LEVEL:GetCorrectedPosition(x,y)

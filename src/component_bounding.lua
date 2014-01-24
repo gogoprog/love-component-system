@@ -7,7 +7,11 @@ COMPONENT_BOUNDING = class(function(o,parameters,entity)
 
     local p = entity.Position
     local e = parameters.Extent
-    o.Quad = love.graphics.newQuad(p[1],p[2],e[1],e[2],1,1)
+
+    o.OffsetX = e[1] * 0.5
+    o.OffsetY = e[2] * 0.5
+
+    o.Quad = love.graphics.newQuad(p[1]-o.OffsetX, p[2]-o.OffsetY, e[1], e[2], 1, 1)
 
     o.World:Add(o.Quad)
 end)
@@ -21,7 +25,7 @@ end
 function COMPONENT_BOUNDING:Update(dt)
     local x,y,w,h = self.Quad:getViewport()
     local p = self.Entity.Position
-    self.Quad:setViewport(p[1],p[2],w,h)
+    self.Quad:setViewport(p[1]-self.OffsetX,p[2]-self.OffsetY,w,h)
 end
 
 function COMPONENT_BOUNDING:PreRender()
@@ -29,5 +33,6 @@ function COMPONENT_BOUNDING:PreRender()
 end
 
 function COMPONENT_BOUNDING:Collides()
+    self:Update()
     return self.World:Collides(self.Quad)
 end

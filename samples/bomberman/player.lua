@@ -9,11 +9,10 @@ PLAYER = entity_class(function(o,x,y,game)
             }
         },
         {
-            Type = "PHYSIC",
+            Type = "BOUNDING",
             Properties = {
                 Shape = "rectangle",
-                Extent = {28,28},
-                Type = "kinematic"
+                Extent = {28,28}
             }
         }
     }
@@ -22,7 +21,7 @@ PLAYER = entity_class(function(o,x,y,game)
 
     local level = game.Level
     o.Level = level
-    o.Colliding = false
+
     o.Game = game
 
     local cx,cy = level:GetCorrectedPosition(x,y)
@@ -38,41 +37,35 @@ function PLAYER:Update(dt)
         local speed = 128
         local p = self.Position
 
-        if not self.Colliding then
+        if kb.isDown('right') then
+            move[1] = move[1] + speed * dt
+            self:SetAnimation(ANIMATION.Get("move_right"))
+        end
 
-            if kb.isDown('right') then
-                move[1] = move[1] + speed * dt
-                self:SetAnimation(ANIMATION.Get("move_right"))
-            end
+        if kb.isDown('left') then
+            move[1] = move[1] - speed * dt
+            self:SetAnimation(ANIMATION.Get("move_left"))
+        end
 
-            if kb.isDown('left') then
-                move[1] = move[1] - speed * dt
-                self:SetAnimation(ANIMATION.Get("move_left"))
-            end
+        if kb.isDown('up') then
+            move[2] = move[2] - speed * dt
+            self:SetAnimation(ANIMATION.Get("move_up"))
+        end
 
-            if kb.isDown('up') then
-                move[2] = move[2] - speed * dt
-                self:SetAnimation(ANIMATION.Get("move_up"))
-            end
+        if kb.isDown('down') then
+            move[2] = move[2] + speed * dt
+            self:SetAnimation(ANIMATION.Get("move_down"))
+        end
 
-            if kb.isDown('down') then
-                move[2] = move[2] + speed * dt
-                self:SetAnimation(ANIMATION.Get("move_down"))
-            end
+        if move[1] ~= 0 or move[2] ~= 0 then
 
-            if move[1] ~= 0 or move[2] ~= 0 then
-                self.LastPosition = {p[1],p[2]}
-
-                if not self:TryMove(move[1], move[2]) then
-                    if not self:TryMove(move[1], 0) then
-                        self:TryMove(0, move[2])
-                    end
+            if not self:TryMove(move[1], move[2]) then
+                if not self:TryMove(move[1], 0) then
+                    self:TryMove(0, move[2])
                 end
-            else
-                self:SetAnimation(ANIMATION.Get("idle"))
             end
         else
-            self.Position = {self.LastPosition[1],self.LastPosition[2]}
+            self:SetAnimation(ANIMATION.Get("idle"))
         end
 
         if kb.isDown('b') then
@@ -101,17 +94,16 @@ end
 
 function PLAYER:TryMove(ox,oy)
     local p = self.Position
+    local safe = {p[1],p[2]}
     local colsize = 28
-    local result = self.Level:Collides(p[1]+ox,p[2]+oy,colsize,colsize)
-
-    for k,v in pairs(result) do
-        if k ~= self then
-            return false
-        end
-    end
 
     p[1] = p[1] + ox
     p[2] = p[2] + oy
+
+    if self:Collides() == true then
+        self.Position = safe
+        return false
+    end
 
     return true
 end

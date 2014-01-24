@@ -11,11 +11,10 @@ BLOCK = entity_class(function(o,x,y)
             }
         },
         {
-            Type = "PHYSIC",
+            Type = "BOUNDING",
             Properties = {
                 Shape = "rectangle",
-                Extent = {32,32},
-                Type = "static"
+                Extent = {32,32}
             }
         }
     }

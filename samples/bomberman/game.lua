@@ -71,14 +71,13 @@ function GAME:NewGame()
     self.Camera = CAMERA()
     self.Players = {}
 
-    table.insert(self.Players, PLAYER(74,64,self))
+    table.insert(self.Players, PLAYER(75,64,self))
 
     table.insert(self.Players, PLAYER(274,364,self))
     table.insert(self.Players, PLAYER(374,064,self))
     table.insert(self.Players, PLAYER(474,464,self))
     table.insert(self.Players, PLAYER(574,164,self))
     table.insert(self.Players, PLAYER(674,364,self))
-
 end
 
 function GAME:Update(dt)
