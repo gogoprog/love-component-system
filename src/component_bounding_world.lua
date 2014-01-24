@@ -39,6 +39,10 @@ function COMPONENT_BOUNDING_WORLD:Add(quad)
 end
 
 function COMPONENT_BOUNDING_WORLD:Remove(quad)
-    --table.remove(self.Quads,quad)
-    -- :TODO: Find, remove and swap with last
+    for k,q in ipairs(self.Quads) do
+        if q == quad then
+            self.Quads[k] = self.Quads[#self.Quads]
+        end
+    end
+    table.remove(self.Quads,#self.Quads)
 end
