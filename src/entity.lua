@@ -36,7 +36,11 @@ function entity_class(base, init, no_parent)
                     return EntityMethoder
                 end
             end
-            return nil 
+
+            if string.sub(key,1,2) == "On" then
+                return function() end
+            end
+            return nil
         end
 
         return c[key]
