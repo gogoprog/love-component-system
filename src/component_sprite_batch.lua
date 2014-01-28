@@ -28,6 +28,7 @@ function COMPONENT_SPRITE_BATCH:PreRender()
 end
 
 function COMPONENT_SPRITE_BATCH:Render()
+    love.graphics.setColor(255,255,255,255)
     local p = self.Entity.Position
     love.graphics.draw(
         self.Batch,

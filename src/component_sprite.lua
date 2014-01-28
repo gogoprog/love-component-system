@@ -7,6 +7,7 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.Offset = parameters.Offset
     o.Layer = parameters.Layer or 1
     o.Entity = entity
+    o.Color = parameters.Color or {255,255,255,255}
 
     local x,y,w,h
 
@@ -35,7 +36,8 @@ end
 
 function COMPONENT_SPRITE:Render()
     local p = self.Entity.Position
-
+    love.graphics.setColor(self.Color)
+    
     if self.Quad then
         love.graphics.draw(
             self.Texture,
@@ -60,4 +62,8 @@ function COMPONENT_SPRITE:Render()
             self.OffsetY
             )
     end
+end
+
+function COMPONENT_SPRITE:SetColor(color)
+    self.Color = color
 end

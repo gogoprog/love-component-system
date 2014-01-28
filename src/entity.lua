@@ -36,7 +36,7 @@ function entity_class(base, init, no_parent)
                     return EntityMethoder
                 end
             end
-            return function() end
+            return nil 
         end
 
         return c[key]
@@ -113,17 +113,18 @@ function ENTITY.DestroyAll()
 end
 
 function ENTITY.UpdateAll(dt)
-    for k,v in ipairs(ENTITY.Items) do
+    local items = ENTITY.Items
+    for k,v in ipairs(items) do
         v:InternalUpdate(dt)
     end
 
     for k,v in ipairs(ENTITY.ItemsToDestroy) do
         v:Unregister()
         v.Components = {}
-        for j,item in ipairs(ENTITY.Items) do
+        for j,item in ipairs(items) do
             if item == v then
-                ENTITY.Items[j] = ENTITY.Items[#ENTITY.Items]
-                ENTITY.Items[#ENTITY.Items] = nil
+                items[j] = ENTITY.Items[#items]
+                items[#items] = nil
                 break
             end
         end

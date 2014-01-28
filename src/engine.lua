@@ -13,6 +13,7 @@ require 'lcs.component_static_sprite'
 require 'lcs.component_bounding'
 require 'lcs.component_bounding_world'
 
+require 'lcs.state_machine'
 
 require 'lcs.texture'
 require 'lcs.animation'
@@ -46,4 +47,14 @@ end
 
 function ENGINE.AddRenderable(item, layer)
     table.insert(ENGINE.Renderables[layer], item)
+end
+
+function ENGINE.DebugDraw()
+    love.graphics.setColor({0,0,0,128})
+    love.graphics.rectangle("fill", 0, 20, 128, 20 )
+    love.graphics.print("Entities: " .. #ENTITY.Items, 10, 20)
+    love.graphics.setColor({255,255,255,255})
+
+    love.graphics.print("Entities: " .. #ENTITY.Items, 11, 21)
+    love.graphics.setColor({255,255,255,255})
 end

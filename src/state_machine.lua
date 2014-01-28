@@ -4,11 +4,11 @@ STATE_MACHINE = STATE_MACHINE or {}
 
 function STATE_MACHINE.MissingState(k)
     if k == nil then
-        trace( "State is nil! \n")
+        print( "State is nil!")
     elseif type(k) == 'function' then
-        trace( "Missing state! \n")
+        print( "Missing state!")
     else
-        trace( "Missing state : " .. k .. " !\n")
+        print( "Missing state : " .. k .. " !")
     end
 end
 
@@ -41,8 +41,8 @@ function STATE_MACHINE.ImplementInClass(_class)
     setmetatable(_class.OnStateExit, { __index = function(t,k) return function() end end })
 
     _class.ChangeState = function(s,state)
-        s.OnStateExit[s.State](s)
-        s.OnStateEnter[state](s)
+        if s.OnStateExit and s.OnStateExit[s.State] then s.OnStateExit[s.State](s) end
+        if s.OnStateEnter and s.OnStateEnter[state] then s.OnStateEnter[state](s) end
         s.State = state
     end
 

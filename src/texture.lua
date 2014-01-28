@@ -4,6 +4,8 @@ TEXTURE = {
 
 function TEXTURE.Load(name, filepath)
     TEXTURE.Items[name] = love.graphics.newImage(filepath)
+
+    return TEXTURE.Items[name]
 end
 
 function TEXTURE.Get(name)

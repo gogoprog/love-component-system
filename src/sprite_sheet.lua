@@ -5,6 +5,8 @@ SPRITE_SHEET = class(function(o, source, tile_width, tile_height)
     o.Quads = {}
     o.TileWidth = tile_width or 1
     o.TileHeight = tile_height or 1
+
+    o.CellsPerWidth = source:getWidth() / o.TileWidth
 end)
 
 SPRITE_SHEET.Items = {}
