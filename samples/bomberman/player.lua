@@ -100,7 +100,7 @@ function PLAYER:TryMove(ox,oy)
     p[1] = p[1] + ox
     p[2] = p[2] + oy
 
-    if self:Collides() == true then
+    if self:CollidesWithWorld() == true then
         self.Position = safe
         return false
     end

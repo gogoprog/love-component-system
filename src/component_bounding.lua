@@ -13,7 +13,7 @@ COMPONENT_BOUNDING = class(function(o,parameters,entity)
 
     o.Quad = love.graphics.newQuad(p[1]-o.OffsetX, p[2]-o.OffsetY, e[1], e[2], 1, 1)
 
-    o.World:Add(o.Quad)
+    o.World:Add(o)
 end)
 
 -- METHODS
@@ -32,12 +32,12 @@ function COMPONENT_BOUNDING:PreRender()
 
 end
 
-function COMPONENT_BOUNDING:Collides()
+function COMPONENT_BOUNDING:CollidesWithWorld()
     self:Update()
-    return self.World:Collides(self.Quad)
+    return self.World:CollidesWithBounding(self)
 end
 
-function boxSegmentIntersection(l,t,w,h, x1,y1,x2,y2)
+local function BoxSegmentIntersection(l,t,w,h, x1,y1,x2,y2)
   local dx, dy  = x2-x1, y2-y1
 
   local t0, t1  = 0, 1
@@ -51,14 +51,14 @@ function boxSegmentIntersection(l,t,w,h, x1,y1,x2,y2)
     end
 
     if p == 0 then
-      if q < 0 then return nil end  -- Segment is parallel and outside the bbox
+      if q < 0 then return nil end
     else
       r = q / p
       if p < 0 then
         if     r > t1 then return nil
         elseif r > t0 then t0 = r
         end
-      else -- p > 0
+      else
         if     r < t0 then return nil
         elseif r < t1 then t1 = r
         end
@@ -77,17 +77,13 @@ end
 function COMPONENT_BOUNDING:Intersects(x1,y1,x2,y2)
     local l,t,w,h = self.Quad:getViewport()
 
-    return boxSegmentIntersection(l,t,w,h,x1,y1,x2,y2) ~= nil
+    return BoxSegmentIntersection(l,t,w,h,x1,y1,x2,y2) ~= nil
 end
 
 
-function COMPONENT_BOUNDING:CollidesWith(qx,qy,qw,qh)
-    qx = math.floor(qx)
-    qy = math.floor(qy)
-
+function COMPONENT_BOUNDING:Collides(qx,qy,qw,qh)
     local x,y,w,h = self.Quad:getViewport()
-    x = math.floor(x)
-    y = math.floor(y)
+
     if not( qx > x + w or qx + qw < x or qy > y + h or qy + qh < y ) then
         return true
     end

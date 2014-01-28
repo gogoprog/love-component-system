@@ -40,6 +40,7 @@ function entity_class(base, init, no_parent)
             if string.sub(key,1,2) == "On" then
                 return function() end
             end
+
             return nil
         end
 

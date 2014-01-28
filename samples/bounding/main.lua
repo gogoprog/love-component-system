@@ -44,7 +44,7 @@ function love.update(dt)
     local x,y = love.mouse.getPosition()
     userblock.Position = {x,y}
 
-    if userblock:Collides() then
+    if userblock:CollidesWithWorld() then
         userblock:SetQuadColor({255,0,0,255})
     else
         userblock:SetQuadColor({255,255,255,255})
