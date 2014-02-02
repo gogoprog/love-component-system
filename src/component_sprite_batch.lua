@@ -36,3 +36,7 @@ function COMPONENT_SPRITE_BATCH:Render()
         p[2]
         )
 end
+
+function COMPONENT_SPRITE_BATCH:AddSpriteQuad(q,x,y)
+    self.Batch:add(q,x,y)
+end
