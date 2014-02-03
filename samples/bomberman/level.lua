@@ -53,7 +53,7 @@ function LEVEL:Initialize(game)
 
     for x=0,800,32 do
         for y=0,600,32 do
-            self.World.SpriteBatch:add(grass_quad,x,y)
+            self.World:AddSpriteQuad(grass_quad,x,y)
         end
     end
 
