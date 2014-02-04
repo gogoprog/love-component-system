@@ -32,13 +32,13 @@ function ENGINE.Update(dt)
 end
 
 function ENGINE.Render()
-    for l=1,100 do
+    for l=1,1000 do
         ENGINE.Renderables[l] = {}
     end
 
     ENTITY.PreRenderAll()
 
-    for k,v in pairs(ENGINE.Renderables) do
+    for k,v in ipairs(ENGINE.Renderables) do
         for _,item in ipairs(v) do
             item:Render()
         end

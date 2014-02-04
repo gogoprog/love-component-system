@@ -24,6 +24,7 @@ local description = {
             Type = "SPRITE_BATCH",
             Properties = {
                 SpriteSheet = sprite_sheet,
+                Size = 10240
             }
         }
     },
@@ -44,6 +45,17 @@ local description = {
             }
         }
     },
+    Block = {
+        {
+            Type = "SPRITE",
+            Properties = {
+                Texture = sprite_sheet.Source,
+                Quad = sprite_sheet:GetQuad("block1"),
+                Layer = 2,
+                Color = {255,255,255,255}
+            }
+        }
+    }
 }
 
 function CarToIso(x, y)
@@ -57,25 +69,17 @@ end
 local camera = ENTITY(description.Camera,{-400,-100})
 local cursor = ENTITY(description.Cursor)
 local cellsize = 32
+local grid_items = {}
 
 -- Callbacks
 
 function love.load()
     local world = ENTITY(description.World,{0,0})
-
     world:Bind()
 
-    for x=0,400,cellsize do
-        for y=0,400,cellsize do
-
-            local q
-
-            if math.random() > 0.06 then
-                q = sprite_sheet:GetQuad("grass" .. math.random(1,7))
-            else
-                q = sprite_sheet:GetQuad("block" .. math.random(1,2))
-            end
-
+    for x=0,1024,cellsize do
+        for y=0,1024,cellsize do
+            local q = sprite_sheet:GetQuad("grass" .. math.random(1,7))
             world:AddSpriteQuad(q,CarToIso(x - cellsize*0.5,y - cellsize*0.5))
         end
     end
@@ -95,19 +99,37 @@ function love.update(dt)
 
         camera.MouseX = mx
         camera.MouseY = my
-    else
-        camera.MouseX = love.mouse.getX()
-        camera.MouseY = love.mouse.getY()
-        cursor.Position[1] = camera.MouseX + camera.Position[1]
-        cursor.Position[2] = camera.MouseY + camera.Position[2]
+    elseif love.mouse.isDown('l') then
+        local i,j = CarToIso(cursor.CellX * cellsize,cursor.CellY * cellsize)
 
-        local cx,cy = IsoToCar(cursor.Position[1], cursor.Position[2])
+        if cursor.CellX > 0 and cursor.CellY > 0 then
+            if grid_items[i] == nil then
+                grid_items[i] = {}
+            end
 
-        cx = math.floor( cx / cellsize ) 
-        cy = math.floor( cy / cellsize ) 
+            if grid_items[i][j] == nil then
+                description.Block[1].Properties.Layer = j
+                description.Block[1].Properties.Quad = sprite_sheet:GetQuad("block" .. math.random(1,2))
+                ENTITY(description.Block,{ i,j })
 
-        cursor.Position = { CarToIso(cx * cellsize,cy * cellsize) }
+                grid_items[i][j] = "occupied"
+            end
+        end
     end
+
+    camera.MouseX = love.mouse.getX()
+    camera.MouseY = love.mouse.getY()
+    cursor.Position[1] = camera.MouseX + camera.Position[1]
+    cursor.Position[2] = camera.MouseY + camera.Position[2]
+
+    local cx,cy = IsoToCar(cursor.Position[1], cursor.Position[2])
+
+    cx = math.floor( cx / cellsize ) 
+    cy = math.floor( cy / cellsize ) 
+
+    cursor.Position = { CarToIso(cx * cellsize,cy * cellsize) }
+    cursor.CellX, cursor.CellY = cx,cy
+
 end
 
 function love.draw()
