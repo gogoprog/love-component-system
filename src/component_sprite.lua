@@ -18,6 +18,10 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
         h = o.Texture:getHeight()
     end
 
+    if o.Extent == nil then
+        o.Extent = {w,h}
+    end
+
     o.ScaleFactorX = o.Extent[1] / w
     o.ScaleFactorY = o.Extent[2] / h
     o.OffsetX = w * 0.5
