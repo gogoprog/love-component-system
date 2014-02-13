@@ -2,6 +2,7 @@ require "lcs.entity"
 
 require 'lcs.component_sprite'
 require 'lcs.component_quad'
+require 'lcs.component_circle'
 require 'lcs.component_animated_sprite'
 require 'lcs.component_physic'
 require 'lcs.component_physic_world'
