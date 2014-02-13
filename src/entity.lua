@@ -90,11 +90,11 @@ ENTITY = entity_class(function(o,components,position)
                 properties = v.Properties
             end
 
-            if constructor.new then
-                component = constructor:new(properties,o)
-            else
-                component = constructor(properties,o)
+            if not constructor then
+                error("LCS: Unknown component <" .. v.Type .. ">")
             end
+
+            component = constructor(properties,o)
 
             table.insert(o.Components, component)
         end
