@@ -36,6 +36,16 @@ function COMPONENT_SPRITE_BATCH:Render()
         )
 end
 
-function COMPONENT_SPRITE_BATCH:AddSpriteQuad(q,x,y)
-    self.Batch:add(q,x,y)
+function COMPONENT_SPRITE_BATCH:AddSpriteQuad(q,x,y,r,sx,sy)
+    local qx,qy,w,h = q:getViewport()
+    self.Batch:add(
+        q,
+        x,
+        y,
+        r,
+        sx,
+        sy,
+        w * 0.5,
+        h * 0.5
+        )
 end
