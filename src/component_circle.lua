@@ -28,7 +28,7 @@ function COMPONENT_CIRCLE:Render()
         )
 end
 
-function COMPONENT_CIRCLE:SetQuadColor(color)
+function COMPONENT_CIRCLE:SetCircleColor(color)
     self.Color = color
 end
 
