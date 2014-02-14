@@ -4,7 +4,7 @@ require 'bird'
 
 GAME = class(function(o)
     o.Level = LEVEL()
-
+    o.LastMouseDown = false
 end)
 
 function GAME:Load()
@@ -41,9 +41,12 @@ function GAME:Update(dt)
 
         self.Camera.Position[1] = birdpos[1] - 200
 
-        if love.mouse.isDown('l') then
-            self.Bird:ApplyForce(0,-10000)
+        local mouse_is_down = love.mouse.isDown('l')
+        if mouse_is_down and not self.LastMouseDown then
+            self.Bird:SetLinearVelocity(0,-300)
         end
+        self.LastMouseDown = mouse_is_down
+
 
         self.Level:Update(dt)
     else
