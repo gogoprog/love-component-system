@@ -41,5 +41,5 @@ function BIRD:Update(dt)
 end
 
 function BIRD:OnCollisionBegin(other)
-    self.Game.GameOver = true
+    self.Game:GameOver()
 end

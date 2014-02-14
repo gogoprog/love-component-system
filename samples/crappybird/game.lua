@@ -22,7 +22,7 @@ end
 function GAME:NewGame()
     ENTITY.DestroyAll()
 
-    self.GameOver = false
+    self.GameIsOver = false
 
     self.Camera = CAMERA()
     self.Level:Load()
@@ -32,7 +32,7 @@ function GAME:NewGame()
 end
 
 function GAME:Update(dt)
-    if not self.GameOver then
+    if not self.GameIsOver then
         local birdpos = self.Bird.Position
         
         birdpos[1] = birdpos[1] + dt * 200
@@ -46,6 +46,16 @@ function GAME:Update(dt)
         end
 
         self.Level:Update(dt)
+    else
+        self.Time = self.Time - dt
+        if self.Time < 0 then
+            self:NewGame()
+        end
     end
 
+end
+
+function GAME:GameOver()
+    self.GameIsOver = true
+    self.Time = 3
 end
