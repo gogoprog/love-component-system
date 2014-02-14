@@ -65,3 +65,7 @@ function COMPONENT_PHYSIC:SetOrientation(r)
     self.Body:setAngle(r)
     self.Entity.Orientation = r
 end
+
+function COMPONENT_PHYSIC:SetLinearVelocity(x,y)
+    self.Body:setLinearVelocity(x,y)
+end
