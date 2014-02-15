@@ -36,13 +36,17 @@ function COMPONENT_TEXT:Render()
         )
 end
 
-function COMPONENT_TEXT:SetText(text)
+function COMPONENT_TEXT:SetText(text, reset_extent)
     local w = self.Font:getWidth(text)
     local h = self.Font:getHeight()
 
     self.Text = text
     self.OffsetX = w * 0.5
     self.OffsetY = h * 0.5
+
+    if reset_extent then
+        self.Extent = {self.Font:getWidth(text), self.Font:getHeight()}
+    end
 
     self.ScaleX = self.Extent[1] / w
     self.ScaleY = self.Extent[2] / h
