@@ -1,5 +1,6 @@
 LEVEL = class(function(o)
     o.ObstacleHeight = 8*4*15
+    o.Obstacles = {}
 end)
 
 function LEVEL:Load(game)
@@ -13,7 +14,8 @@ function LEVEL:Load(game)
             {
                 Type = "SPRITE_BATCH",
                 Properties = {
-                    SpriteSheet = SPRITE_SHEET.Get("tiles")
+                    SpriteSheet = SPRITE_SHEET.Get("tiles"),
+                    Size = 10240
                 }
             }
         },
@@ -30,7 +32,7 @@ function LEVEL:Load(game)
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {10240,8*15},
+                    Extent = {10240,4*15},
                     Type = "static"
                 }
             }
@@ -75,15 +77,15 @@ function LEVEL:GenerateBlocks(descriptions)
     local w = self.World
 
     w:Bind()
-    for i=1,100 do
+    for i=1,1000 do
         w:AddSpriteQuad(q, i * 4 * 15,0,0,4,-4)
         w:AddSpriteQuad(q, i * 4 * 15,570,0,4,4)
     end
 
-    local lastx = 800
+    local lastx = 4 * 15 * 10
     local y
-    for i=1,10 do
-        local x = lastx + i * 4 * 15 * math.random(3,4)
+    for i=1,100 do
+        local x = lastx + 4 * 15 * math.random(5,10)
         local center = math.random(150,450)
 
         y = center-self.ObstacleHeight* 0.65
@@ -95,6 +97,8 @@ function LEVEL:GenerateBlocks(descriptions)
         ENTITY(descriptions.Obstacle,{x,y})
 
         lastx = x
+
+        table.insert(self.Obstacles, x)
     end
 
     w:Unbind()
@@ -103,4 +107,15 @@ end
 function LEVEL:Update(dt)
     local skypos = self.Sky.Position
     skypos[1] = skypos[1] + dt * 100
+end
+
+function LEVEL:GetScore(x)
+    local res = 0
+    for k,v in ipairs(self.Obstacles) do
+        if x > v + 20 then
+            res = res + 1
+        else
+            return res
+        end
+    end
 end

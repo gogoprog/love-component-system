@@ -111,8 +111,27 @@ function GAME.OnStateExit:Menu()
 end
 
 function GAME.OnStateEnter:InGame()
+
+    local descriptions = {
+        Score = {
+            {
+                Type = "TEXT",
+                Properties = {
+                    Text = "Score: 00",
+                    Layer = 100,
+                    Color = {0,0,0,255},
+                    Font = font,
+                    World = 2
+                }
+            }
+        }
+    }
+
     self.Bird = BIRD()
     self.Bird.Game = self
+
+    self.ScoreText = ENTITY(descriptions.Score,{128,10})
+    self.Score = 0
 end
 
 function GAME.OnStateUpdate:InGame(dt)
@@ -129,6 +148,13 @@ function GAME.OnStateUpdate:InGame(dt)
     end
 
     self.Level:Update(dt)
+
+    local score = self.Level:GetScore(birdpos[1])
+
+    if score ~= self.Score then
+        self.Score = score
+        self.ScoreText:SetText("Score: " .. string.format("%02i", score), true)
+    end
 end
 
 function GAME.OnStateUpdate:GameOver(dt)
