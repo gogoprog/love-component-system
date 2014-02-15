@@ -21,7 +21,7 @@ require 'lcs.animation'
 require 'lcs.sprite_sheet'
 
 ENGINE = {
-    Renderables = {}
+    RenderWorlds = {}
 }
 
 function ENGINE.Initialize(arg)
@@ -33,21 +33,35 @@ function ENGINE.Update(dt)
 end
 
 function ENGINE.Render()
-    for l=1,1000 do
-        ENGINE.Renderables[l] = {}
-    end
+    ENGINE.RenderWorlds = {}
 
     ENTITY.PreRenderAll()
 
-    for k,v in ipairs(ENGINE.Renderables) do
-        for _,item in ipairs(v) do
-            item:Render()
+    for k,w in pairs(ENGINE.RenderWorlds) do
+
+        local a = {}
+        for n in pairs(w) do table.insert(a, n) end
+        table.sort(a)
+
+        for i,n in ipairs(a) do
+            for _,item in ipairs(w[n]) do
+                item:Render()
+            end
         end
     end
 end
 
-function ENGINE.AddRenderable(item, layer)
-    table.insert(ENGINE.Renderables[layer], item)
+function ENGINE.AddRenderable(item, layer, world)
+    world = world or 1
+    if not ENGINE.RenderWorlds[world] then
+        ENGINE.RenderWorlds[world] = {}
+    end
+
+    if not ENGINE.RenderWorlds[world][layer] then
+        ENGINE.RenderWorlds[world][layer] = {}
+    end
+
+    table.insert(ENGINE.RenderWorlds[world][layer], item)
 end
 
 function ENGINE.DebugDraw()
