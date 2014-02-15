@@ -2,6 +2,7 @@ require 'lcs.class'
 
 COMPONENT_TEXT = class(function(o,parameters,entity)
     o.Layer = parameters.Layer or 1
+    o.Color = parameters.Color or {255,255,255,255}
     o.Entity = entity
     o.Font = parameters.Font or love.graphics.getFont()
     o.Extent = parameters.Extent or {o.Font:getWidth(parameters.Text), o.Font:getHeight()}
@@ -19,6 +20,7 @@ end
 
 function COMPONENT_TEXT:Render()
     love.graphics.setFont(self.Font)
+    love.graphics.setColor(self.Color)
 
     local p = self.Entity.Position
     love.graphics.print(

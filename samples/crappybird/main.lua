@@ -8,7 +8,7 @@ function love.load(arg)
     love.graphics.setBackgroundColor( 0, 255, 255 )
     ENGINE.Initialize(arg)
     game:Load()
-    game:NewGame()
+    game:ChangeState("Menu")
 end
 
 function love.update(dt)
