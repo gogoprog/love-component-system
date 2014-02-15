@@ -7,6 +7,7 @@ COMPONENT_TEXT = class(function(o,parameters,entity)
     o.Font = parameters.Font or love.graphics.getFont()
     o.Extent = parameters.Extent or {o.Font:getWidth(parameters.Text), o.Font:getHeight()}
     o:SetText(parameters.Text)
+    o.World = parameters.World or 1
 end)
 
 -- METHODS
@@ -15,7 +16,7 @@ function COMPONENT_TEXT:Update()
 end
 
 function COMPONENT_TEXT:PreRender()
-    ENGINE.AddRenderable(self,self.Layer)
+    ENGINE.AddRenderable(self, self.Layer, self.World)
 end
 
 function COMPONENT_TEXT:Render()

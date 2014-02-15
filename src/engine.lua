@@ -21,7 +21,8 @@ require 'lcs.animation'
 require 'lcs.sprite_sheet'
 
 ENGINE = {
-    RenderWorlds = {}
+    RenderWorlds = {},
+    Cameras = {}
 }
 
 function ENGINE.Initialize(arg)
@@ -38,6 +39,9 @@ function ENGINE.Render()
     ENTITY.PreRenderAll()
 
     for k,w in pairs(ENGINE.RenderWorlds) do
+        if ENGINE.Cameras[k] then
+            ENGINE.Cameras[k]:Apply()
+        end
 
         local a = {}
         for n in pairs(w) do table.insert(a, n) end
@@ -72,4 +76,8 @@ function ENGINE.DebugDraw()
 
     love.graphics.print("Entities: " .. #ENTITY.Items, 11, 21)
     love.graphics.setColor({255,255,255,255})
+end
+
+function ENGINE.SetCamera(w, camera)
+    ENGINE.Cameras[w] = camera
 end

@@ -27,6 +27,7 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.OffsetX = w * 0.5
     o.OffsetY = h * 0.5
 
+    o.World = parameters.World or 1
 end)
 
 -- METHODS
@@ -35,7 +36,7 @@ function COMPONENT_SPRITE:Update()
 end
 
 function COMPONENT_SPRITE:PreRender()
-    ENGINE.AddRenderable(self,self.Layer)
+    ENGINE.AddRenderable(self, self.Layer, self.World)
 end
 
 function COMPONENT_SPRITE:Render()
