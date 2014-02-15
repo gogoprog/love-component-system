@@ -31,6 +31,18 @@ end
 function GAME:NewGame()
     ENTITY.DestroyAll()
 
+    local description = {
+        {
+            Type = "CAMERA",
+            Properties = {
+                Extent = {800,600},
+                World = 2
+            }
+        }
+    }
+
+    self.MenuCamera = ENTITY(description)
+
     self.Camera = CAMERA()
     self.Level:Load()
 end
@@ -56,7 +68,8 @@ function GAME.OnStateEnter:Menu()
                     Text = "CrappyBird",
                     Layer = 100,
                     Color = {0,0,0,255},
-                    Font = title_font
+                    Font = title_font,
+                    World = 2
                 }
             }
         },
@@ -67,10 +80,11 @@ function GAME.OnStateEnter:Menu()
                     Text = "Click to start!",
                     Layer = 100,
                     Color = {0,0,0,255},
-                    Font = font
+                    Font = font,
+                    World = 2
                 }
             }
-        },
+        }
     }
 
     self:NewGame()
@@ -81,8 +95,6 @@ end
 
 function GAME.OnStateUpdate:Menu(dt)
     self.Camera.Position[1] = self.Camera.Position[1] + dt * 200
-    self.Title.Position[1] = self.Camera.Position[1] + 400
-    self.Text.Position[1] = self.Camera.Position[1] + 400
 
     self.Level:Update(dt)
 
@@ -106,7 +118,7 @@ end
 function GAME.OnStateUpdate:InGame(dt)
     local birdpos = self.Bird.Position
     
-    birdpos[1] = birdpos[1] + dt * 200
+    birdpos[1] = birdpos[1] + dt * 2000
 
     self.Bird:SetPosition(birdpos[1], birdpos[2])
 
