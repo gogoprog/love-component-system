@@ -94,7 +94,7 @@ function GAME.OnStateEnter:Menu()
 end
 
 function GAME.OnStateUpdate:Menu(dt)
-    self.Camera.Position[1] = self.Camera.Position[1] + dt * 200
+    self.Camera.Position[1] = self.Camera.Position[1] + dt * 100
 
     self.Level:Update(dt)
 
@@ -118,7 +118,7 @@ end
 function GAME.OnStateUpdate:InGame(dt)
     local birdpos = self.Bird.Position
     
-    birdpos[1] = birdpos[1] + dt * 2000
+    birdpos[1] = birdpos[1] + dt * 300
 
     self.Bird:SetPosition(birdpos[1], birdpos[2])
 

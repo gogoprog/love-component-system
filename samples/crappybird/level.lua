@@ -1,5 +1,5 @@
 LEVEL = class(function(o)
-    o.ObstacleHeight = 4*4*15
+    o.ObstacleHeight = 8*4*15
 end)
 
 function LEVEL:Load(game)
@@ -30,7 +30,7 @@ function LEVEL:Load(game)
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {10240,4*15},
+                    Extent = {10240,8*15},
                     Type = "static"
                 }
             }
@@ -80,18 +80,18 @@ function LEVEL:GenerateBlocks(descriptions)
         w:AddSpriteQuad(q, i * 4 * 15,570,0,4,4)
     end
 
-    local lastx = 0
+    local lastx = 800
     local y
     for i=1,10 do
-        local x = lastx + i * 4 * 15 * math.random(2,4)
-        local center = math.random(250,350)
+        local x = lastx + i * 4 * 15 * math.random(3,4)
+        local center = math.random(150,450)
 
-        y = center-self.ObstacleHeight
-        w:AddSpriteQuad(q, x,y,0,4,16)
+        y = center-self.ObstacleHeight* 0.65
+        w:AddSpriteQuad(q, x,y,0,4,32)
         ENTITY(descriptions.Obstacle,{x,y})
 
-        y = center+self.ObstacleHeight
-        w:AddSpriteQuad(q, x,y,0,4,16)
+        y = center+self.ObstacleHeight*0.65
+        w:AddSpriteQuad(q, x,y,0,4,32)
         ENTITY(descriptions.Obstacle,{x,y})
 
         lastx = x
