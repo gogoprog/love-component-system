@@ -76,6 +76,8 @@ function LEVEL:GenerateBlocks(descriptions)
     local q = ss:GetQuad("block")
     local w = self.World
 
+    self.Obstacles = {}
+
     w:Bind()
     for i=1,1000 do
         w:AddSpriteQuad(q, i * 4 * 15,0,0,4,-4)
@@ -112,7 +114,7 @@ end
 function LEVEL:GetScore(x)
     local res = 0
     for k,v in ipairs(self.Obstacles) do
-        if x > v + 20 then
+        if x > v + 35 then
             res = res + 1
         else
             return res
