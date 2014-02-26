@@ -132,12 +132,13 @@ function GAME.OnStateEnter:InGame()
 
     self.ScoreText = ENTITY(descriptions.Score,{128,10})
     self.Score = 0
+    self.MinusScore = 0
 end
 
 function GAME.OnStateUpdate:InGame(dt)
     local birdpos = self.Bird.Position
     
-    birdpos[1] = birdpos[1] + dt * 300
+    birdpos[1] = birdpos[1] + dt * 100
 
     self.Bird:SetPosition(birdpos[1], birdpos[2])
 
@@ -145,11 +146,12 @@ function GAME.OnStateUpdate:InGame(dt)
 
     if self.MouseIsJustDown then
         self.Bird:SetLinearVelocity(0,-300)
+        self.MinusScore = self.MinusScore + 1
     end
 
     self.Level:Update(dt)
 
-    local score = self.Level:GetScore(birdpos[1])
+    local score = self.Level:GetScore(birdpos[1]) - self.MinusScore
 
     if score ~= self.Score then
         self.Score = score

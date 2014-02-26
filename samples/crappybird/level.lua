@@ -115,7 +115,7 @@ function LEVEL:GetScore(x)
     local res = 0
     for k,v in ipairs(self.Obstacles) do
         if x > v + 35 then
-            res = res + 1
+            res = res + 10
         else
             return res
         end
