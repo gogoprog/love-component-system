@@ -15,8 +15,10 @@ COMPONENT_PHYSIC = class(function(o,parameters,entity)
     parameters.Type = parameters.Type or "dynamic"
     parameters.World = parameters.World or COMPONENT_PHYSIC_WORLD.DefaultWorld
     COMPONENT_PHYSIC_Init[parameters.Shape](o,parameters,entity.Position[1],entity.Position[2],parameters.Type)
-    o.Fixture = love.physics.newFixture(o.Body, o.Shape)
+
+    o.Fixture = love.physics.newFixture(o.Body, o.Shape, parameters.Density)
     o.Fixture:setUserData(entity)
+
     o.Type = parameters.Type
     o.Entity = entity
     o.World = parameters.World
