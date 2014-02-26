@@ -19,7 +19,8 @@ function LEVEL:Load()
             Properties = {
                 Shape = "rectangle",
                 Extent = {10240,4*15},
-                Type = "static"
+                Type = "static",
+                Density = 1
             }
         }
     }
@@ -63,7 +64,7 @@ end
 
 
 function LEVEL:GenerateTower(x)
-    local last_y = 570
+    local last_y = 560
     for i=1,10 do
         local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
         local pos = {x,last_y - extent[2] * 0.5}

@@ -17,6 +17,7 @@ function GAME:Load()
     TEXTURE.Load("crate1","data/crate1.png")
     TEXTURE.Load("crate2","data/crate2.png")
     TEXTURE.Load("crate3","data/crate3.png")
+    TEXTURE.Load("ball","data/ball.png")
 
     title_font = love.graphics.newFont("data/game_boy.ttf",72)
     font = love.graphics.newFont("data/game_boy.ttf",24)
@@ -26,12 +27,12 @@ function GAME:NewGame()
     ENTITY.DestroyAll()
     self.Level:Load()
     self.Camera = ENTITY({
-            {
-                Type = "CAMERA",
-                Properties = {
-                }
+        {
+            Type = "CAMERA",
+            Properties = {
             }
-        })
+        }
+    })
 end
 
 function GAME:Update(dt)
@@ -47,7 +48,26 @@ function GAME:Update(dt)
         local delta = {cursor_position[1] - self.PreviousMousePosition[1], cursor_position[2] - self.PreviousMousePosition[2]}
         self.Camera.Position[1] = self.Camera.Position[1] - delta[1]
         self.Camera.Position[2] = self.Camera.Position[2] - delta[2]
+    end
 
+    if self.MouseIsJustDown then
+        ENTITY({
+            {
+                Type = "PHYSIC",
+                Properties = {
+                    Shape = "circle",
+                    Radius = 7,
+                    Type = "dynamic",
+                    Density = 1000
+                }
+            },
+            {
+                Type = "SPRITE",
+                Properties = {
+                    Texture = TEXTURE.Get("ball")
+                }
+            }
+        }, cursor_position)
     end
 
     self.PreviousMouseIsDown = self.MouseIsDown
