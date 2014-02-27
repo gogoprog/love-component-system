@@ -25,6 +25,11 @@ end
 
 function COMPONENT_CANNON:Shoot()
     local p = self.Entity.Position
-    GAME.Instance:SpawnBall({p[2],p[1]})
+    local ball = GAME.Instance:SpawnBall({p[1],p[2]})
+
+    local o = self.Entity.Orientation
+    local x,y = -math.sin(o), math.cos(o)
+
+    ball:ApplyLinearImpulse(x*150000,y*150000)
 end
 

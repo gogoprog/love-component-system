@@ -125,7 +125,7 @@ function GAME:UpdateInput()
 end
 
 function GAME:SpawnBall(pos)
-    ENTITY({
+    return ENTITY({
         {
             Type = "PHYSIC",
             Properties = {
