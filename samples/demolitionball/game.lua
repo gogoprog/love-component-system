@@ -1,11 +1,15 @@
 require 'level'
+require 'component_cannon'
 
 GAME = class(function(o)
-    o.MouseIsDown = false
-    o.MouseIsJustDown = false
-    o.PreviousMouseIsDown = false
+    o.MouseIsDown = {}
+    o.MouseIsJustDown = {}
+    o.PreviousMouseIsDown = {}
     o.PreviousMousePosition = nil
+    o.MouseWorldPosition = {}
     o.Level = LEVEL()
+
+    GAME.Instance = o
 end)
 
 STATE_MACHINE.ImplementInClass(GAME)
@@ -33,47 +37,45 @@ function GAME:NewGame()
             }
         }
     })
+
+    self.Cannon = ENTITY({
+        {
+            Type = "SPRITE",
+            Properties = {
+                Texture = TEXTURE.Get("ball"),
+                Extent = {16,64}
+            }
+        },
+        {
+            Type = "CANNON",
+            Properties = {
+            }
+        }
+    }, {20, 500})
 end
 
 function GAME:Update(dt)
-    local cursor_position = {love.mouse.getPosition()}
-    self.MouseIsDown = love.mouse.isDown('r')
-    if self.MouseIsDown and not self.PreviousMouseIsDown then
-        self.MouseIsJustDown = true
-    else
-        self.MouseIsJustDown = false
-    end
+    self:UpdateInput()
 
-    if self.MouseIsDown then
+    local cursor_position = {love.mouse.getPosition()}
+
+    if self.MouseIsDown[2] then
         local delta = {cursor_position[1] - self.PreviousMousePosition[1], cursor_position[2] - self.PreviousMousePosition[2]}
         self.Camera.Position[1] = self.Camera.Position[1] - delta[1]
         self.Camera.Position[2] = self.Camera.Position[2] - delta[2]
     end
 
-    if self.MouseIsJustDown then
-        ENTITY({
-            {
-                Type = "PHYSIC",
-                Properties = {
-                    Shape = "circle",
-                    Radius = 7,
-                    Type = "dynamic",
-                    Density = 1000
-                }
-            },
-            {
-                Type = "SPRITE",
-                Properties = {
-                    Texture = TEXTURE.Get("ball")
-                }
-            }
-        }, cursor_position)
-    end
+    self.MouseWorldPosition = {self.Camera.Position[1] + cursor_position[1], self.Camera.Position[2] + cursor_position[2]}
 
-    self.PreviousMouseIsDown = self.MouseIsDown
+    if self.MouseIsJustDown[1] then
+        --self:SpawnBall(self.MouseWorldPosition)
+
+        self.Cannon:Shoot()
+    end
 
     self:UpdateState(dt)
     self.PreviousMousePosition = cursor_position
+
 end
 
 function GAME.OnStateEnter:Menu()
@@ -106,4 +108,38 @@ end
 
 function GAME:GameOver()
 
+end
+
+function GAME:UpdateInput()
+    self.MouseIsDown[1] = love.mouse.isDown('l')
+    self.MouseIsDown[2] = love.mouse.isDown('r')
+    for i=1,2 do
+        if self.MouseIsDown[i] and not self.PreviousMouseIsDown[i] then
+            self.MouseIsJustDown[i] = true
+        else
+            self.MouseIsJustDown[i] = false
+        end
+
+        self.PreviousMouseIsDown[i] = self.MouseIsDown[i]
+    end
+end
+
+function GAME:SpawnBall(pos)
+    ENTITY({
+        {
+            Type = "PHYSIC",
+            Properties = {
+                Shape = "circle",
+                Radius = 7,
+                Type = "dynamic",
+                Density = 1000
+            }
+        },
+        {
+            Type = "SPRITE",
+            Properties = {
+                Texture = TEXTURE.Get("ball")
+            }
+        }
+    }, pos)
 end
