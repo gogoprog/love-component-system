@@ -1,3 +1,5 @@
+require 'component_breakable'
+
 LEVEL = class(function(o)
 
 end)
@@ -49,6 +51,11 @@ function LEVEL:GetCrateDescription(extent)
                 Texture = TEXTURE.Get("crate" .. math.random(1,3)),
                 Extent = extent
             }
+        },
+        {
+            Type = "BREAKABLE",
+            Properties = {
+            }
         }
     }
     return description
@@ -62,10 +69,9 @@ function LEVEL:GenerateRandomCrates()
     end
 end
 
-
 function LEVEL:GenerateTower(x)
     local last_y = 560
-    for i=1,20 do
+    for i=1,5 do
         local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
         local pos = {x,last_y - extent[2] * 0.5}
         ENTITY(self:GetCrateDescription(extent),pos)
