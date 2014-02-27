@@ -99,6 +99,7 @@ ENTITY = entity_class(function(o,components,position)
             table.insert(o.Components, component)
         end
     end
+    o:Register()
     table.insert(ENTITY.Items,o)
 end,
 nil,

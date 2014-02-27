@@ -27,7 +27,7 @@ end)
 -- METHODS
 
 function COMPONENT_PHYSIC:Unregister()
-    if self.World.ItIsRegistered then
+    if self.World.Entity.ItIsRegistered then
         self.Fixture:destroy()
         self.Body:destroy()
     end

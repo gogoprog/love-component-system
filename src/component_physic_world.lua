@@ -8,7 +8,6 @@ COMPONENT_PHYSIC_WORLD = class(function(o,parameters,entity)
     o.World:setCallbacks(COMPONENT_PHYSIC_WORLD.CollisionBegin,COMPONENT_PHYSIC_WORLD.CollisionEnd,nil,COMPONENT_PHYSIC_WORLD.CollisionPostSolve)
     o.TimeSum = 0
     o.Entity = entity
-    o.Entity.World = o.World
     COMPONENT_PHYSIC_WORLD.DefaultWorld = COMPONENT_PHYSIC_WORLD.DefaultWorld or o
 end)
 
