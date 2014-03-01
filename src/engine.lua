@@ -13,6 +13,7 @@ require 'lcs.component_sprite_batch'
 require 'lcs.component_static_sprite'
 require 'lcs.component_bounding'
 require 'lcs.component_bounding_world'
+require 'lcs.component_lifetime'
 
 require 'lcs.state_machine'
 
