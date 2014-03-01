@@ -32,10 +32,13 @@ function LEVEL:Load()
     self:GenerateTower(200)
     self:GenerateTower(400)
     self:GenerateTower(600)
+    self:GenerateTower(800)
+    self:GenerateTower(1000)
+    self:GenerateTower(1200)
 
 end
 
-function LEVEL:GetCrateDescription(extent)
+function LEVEL:GetCrateDescription(extent,density,texture)
     local description = {
         {
             Type = "PHYSIC",
@@ -61,20 +64,12 @@ function LEVEL:GetCrateDescription(extent)
     return description
 end
 
-function LEVEL:GenerateRandomCrates()
-    for i=1,10 do
-        local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
-        local pos = {math.random(0,800),math.random(0,300)}
-        ENTITY(self:GetCrateDescription(extent),pos)
-    end
-end
-
 function LEVEL:GenerateTower(x)
     local last_y = 560
-    for i=1,5 do
+    for i=1,25 do
         local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
         local pos = {x,last_y - extent[2] * 0.5}
-        ENTITY(self:GetCrateDescription(extent),pos)
+        ENTITY(self:GetCrateDescription(extent,math.random(1,10),TEXTURE.Get("crate" .. math.random(1,3))),pos)
         last_y = pos[2] - extent[2] * 0.5
     end
 end

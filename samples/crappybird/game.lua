@@ -138,7 +138,7 @@ end
 function GAME.OnStateUpdate:InGame(dt)
     local birdpos = self.Bird.Position
     
-    birdpos[1] = birdpos[1] + dt * 100
+    birdpos[1] = birdpos[1] + dt * 300
 
     self.Bird:SetPosition(birdpos[1], birdpos[2])
 

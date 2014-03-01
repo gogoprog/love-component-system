@@ -30,6 +30,6 @@ function COMPONENT_CANNON:Shoot()
     local o = self.Entity.Orientation
     local x,y = -math.sin(o), math.cos(o)
 
-    ball:ApplyLinearImpulse(x*150000,y*150000)
+    ball:ApplyLinearImpulse(x*15000,y*15000)
 end
 
