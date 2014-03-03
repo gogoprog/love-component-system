@@ -18,7 +18,9 @@ local title_font, font
 
 function GAME:Load()
     TEXTURE.Load("cloud","data/cloud.png")
-    TEXTURE.Load("crate1","data/crate1.png")
+    TEXTURE.Load("crate1_0","data/crate1_0.png")
+    TEXTURE.Load("crate1_1","data/crate1_1.png")
+    TEXTURE.Load("crate1_2","data/crate1_2.png")
     TEXTURE.Load("crate2","data/crate2.png")
     TEXTURE.Load("crate3","data/crate3.png")
     TEXTURE.Load("ball","data/ball.png")

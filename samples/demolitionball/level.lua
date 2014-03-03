@@ -51,13 +51,14 @@ function LEVEL:GetCrateDescription(extent,density,texture)
         {
             Type = "SPRITE",
             Properties = {
-                Texture = TEXTURE.Get("crate" .. math.random(1,3)),
+                Texture = TEXTURE.Get("crate1_0"),
                 Extent = extent
             }
         },
         {
             Type = "BREAKABLE",
             Properties = {
+                TexturesNames = { "crate1_0", "crate1_1", "crate1_2" }
             }
         }
     }
