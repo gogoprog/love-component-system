@@ -28,6 +28,8 @@ COMPONENT_SPRITE = class(function(o,parameters,entity)
     o.OffsetY = h * 0.5
 
     o.World = parameters.World or 1
+
+    o.Entity.Extent = o.Extent
 end)
 
 -- METHODS
@@ -71,4 +73,8 @@ end
 
 function COMPONENT_SPRITE:SetColor(color)
     self.Color = color
+end
+
+function COMPONENT_SPRITE:SetSpriteTexture(texture)
+    self.Texture = texture
 end

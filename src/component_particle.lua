@@ -46,7 +46,9 @@ function COMPONENT_PARTICLE:Render()
     end
 end
 
-function COMPONENT_PARTICLE:AddParticleSystem(ps,keep_local)
-    table.insert(self.Systems, ps)
-    table.insert(self.KeepLocalTable, keep_local)
+function COMPONENT_PARTICLE:AddParticleSystem(input,keep_local)
+    if type(input) == "userdata" then
+        table.insert(self.Systems, input)
+        table.insert(self.KeepLocalTable, keep_local or true)
+    end
 end
