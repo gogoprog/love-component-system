@@ -15,7 +15,6 @@ function COMPONENT_BREAKABLE:Update(dt)
     local n = math.floor((( 1.0 - life ) * #self.TexturesNames)) + 1
 
     self.Entity:SetSpriteTexture(TEXTURE.Get(self.TexturesNames[n]))
-    print (n)
 end
 
 function COMPONENT_BREAKABLE:PreRender()

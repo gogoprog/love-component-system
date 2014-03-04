@@ -67,10 +67,10 @@ end
 
 function LEVEL:GenerateTower(x)
     local last_y = 560
-    for i=1,25 do
+    for i=1,10 do
         local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
         local pos = {x,last_y - extent[2] * 0.5}
-        ENTITY(self:GetCrateDescription(extent,math.random(1,10),TEXTURE.Get("crate" .. math.random(1,3))),pos)
+        local e = ENTITY(self:GetCrateDescription(extent,math.random(1,10),TEXTURE.Get("crate" .. math.random(1,3))),pos)
         last_y = pos[2] - extent[2] * 0.5
     end
 end
