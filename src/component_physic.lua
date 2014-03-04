@@ -58,14 +58,12 @@ function COMPONENT_PHYSIC:ApplyLinearImpulse(x,y)
     self.Body:applyLinearImpulse(x,y)
 end
 
-function COMPONENT_PHYSIC:SetPosition(x,y)
-    self.Body:setPosition(x,y)
-    self.Entity.Position = {x,y}
+function COMPONENT_PHYSIC:SetPosition(t)
+    self.Body:setPosition(t[1],t[2])
 end
 
 function COMPONENT_PHYSIC:SetOrientation(r)
     self.Body:setAngle(r)
-    self.Entity.Orientation = r
 end
 
 function COMPONENT_PHYSIC:SetLinearVelocity(x,y)

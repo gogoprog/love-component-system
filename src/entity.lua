@@ -27,9 +27,31 @@ function entity_class(base, init, no_parent)
         c._base = base
     end
 
+    c.__newindex = function(t,key,value)
+        local fn = "Set" .. key
+        local cs = rawget(t,"Components")
+        if cs then
+            for k,v in ipairs(cs) do
+                if v[fn] then
+                    v[fn](v,value)
+                    return
+                end
+            end
+        end
+        rawset(t,key,value)
+    end
+
     c.__index = function(t,key)
+        if key == "Position" then
+            return rawget(t,"_Position")
+        end
+
+        if key == "Orientation" then
+            return rawget(t,"_Orientation")
+        end
+
         if c[key] == nil then
-            for k,v in ipairs(t.Components) do
+            for k,v in ipairs(rawget(t,"Components")) do
                 if v[key] ~= nil then
                     EntityMethoder.Function = v[key]
                     EntityMethoder.Component = v
@@ -75,7 +97,7 @@ end
 ENTITY = entity_class(function(o,components,position)
 
     o.Orientation = 0
-    o.Position = position or { 0, 0, 0 }
+    o._Position = position or { 0, 0, 0 }
 
     o.Components = {}
     if components ~= nil then

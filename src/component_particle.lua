@@ -49,6 +49,6 @@ end
 function COMPONENT_PARTICLE:AddParticleSystem(input,keep_local)
     if type(input) == "userdata" then
         table.insert(self.Systems, input)
-        table.insert(self.KeepLocalTable, keep_local or true)
+        table.insert(self.KeepLocalTable, keep_local)
     end
 end
