@@ -35,8 +35,8 @@ function COMPONENT_PHYSIC_WORLD.CollisionPostSolve(a, b, c, impulseA, impulseB)
     local user_data_a, user_data_b = a:getUserData(), b:getUserData()
 
     if user_data_a and user_data_b then
-        user_data_a:OnCollisionPostSolve(user_data_b, impulseA)
-        user_data_b:OnCollisionPostSolve(user_data_a, impulseB)
+        user_data_a:OnCollisionPostSolve(user_data_b, impulseA, impulseB)
+        user_data_b:OnCollisionPostSolve(user_data_a, impulseB, impulseA)
     end
 end
 
