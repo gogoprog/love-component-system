@@ -8,7 +8,7 @@ function love.load(arg)
     love.graphics.setBackgroundColor( 0, 255, 255 )
     ENGINE.Initialize(arg)
     game:Load()
-    game:ChangeState("Menu")
+    game:ChangeState("Editor")
 end
 
 function love.update(dt)
@@ -26,6 +26,14 @@ function love.keypressed(key)
     end
 
     if key == "f1" then
-        game:NewGame()
+        game:ChangeState("InGame")
+    end
+
+    if key == "f2" then
+        game:ChangeState("Editor")
+    end
+
+    if EDITOR and EDITOR.Instance then
+        EDITOR.Instance:OnKeyPressed(key)
     end
 end

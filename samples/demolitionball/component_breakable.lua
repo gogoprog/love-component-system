@@ -2,7 +2,7 @@ require 'lcs.class'
 
 COMPONENT_BREAKABLE= class(function(o,parameters,entity)
     o.Entity = entity
-    o.Resistance = parameters.Resistance or 10000
+    o.Resistance = parameters.Resistance or 1000
     o.InitialResistance = o.Resistance
     o.TexturesNames = parameters.TexturesNames
 end)
@@ -28,8 +28,11 @@ function COMPONENT_BREAKABLE:OnCollisionBegin(other)
 
 end
 
-function COMPONENT_BREAKABLE:OnCollisionPostSolve(other, impulse)
-    if impulse > 200 then
+function COMPONENT_BREAKABLE:OnCollisionPostSolve(other, impulseA, impulseB)
+    local impulse = impulseA + impulseB
+    impulse = impulseB
+
+    if impulse > 10 then
         self.Resistance = self.Resistance - impulse
 
         if self.Resistance < 0 then
@@ -55,10 +58,10 @@ function COMPONENT_BREAKABLE:CreateDebris()
         }
     }
 
-    local ps = love.graphics.newParticleSystem(TEXTURE.Get("cloud"), 30)
-    ps:setEmissionRate(30)
+    local ps = love.graphics.newParticleSystem(TEXTURE.Get("cloud"), 100)
+    ps:setEmissionRate(300)
     ps:setParticleLifetime(0.5)
-    ps:setEmitterLifetime(0.5)
+    ps:setEmitterLifetime(0.2)
     ps:setSizes(0.5,1)
     ps:setColors(255,255,255,255,0,0,0,0)
     ps:setSpread(2 * 3.14)

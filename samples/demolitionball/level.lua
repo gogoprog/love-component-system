@@ -1,10 +1,11 @@
 require 'component_breakable'
+require 'crates'
 
 LEVEL = class(function(o)
 
 end)
 
-function LEVEL:Load()
+function LEVEL:Init()
     local world_description = {
         {
             Type = "PHYSIC_WORLD",
@@ -28,14 +29,15 @@ function LEVEL:Load()
     }
 
     ENTITY(ground_description,{0,600})
+end
 
+function LEVEL:Test()
     self:GenerateTower(200)
     self:GenerateTower(400)
     self:GenerateTower(600)
     self:GenerateTower(800)
     self:GenerateTower(1000)
     self:GenerateTower(1200)
-
 end
 
 function LEVEL:GetCrateDescription(extent,density,texture)
@@ -45,7 +47,8 @@ function LEVEL:GetCrateDescription(extent,density,texture)
             Properties = {
                 Shape = "rectangle",
                 Extent = extent,
-                Type = "dynamic"
+                Type = "dynamic",
+                Density = density
             }
         },
         {
@@ -67,10 +70,12 @@ end
 
 function LEVEL:GenerateTower(x)
     local last_y = 560
+    local names={"Small","Big"}
     for i=1,10 do
-        local extent = {math.random(1,4) * 16,math.random(1,4) * 16}
+        local name = names[math.random(1,2)]
+        local extent = CRATES.List[name].Extent
         local pos = {x,last_y - extent[2] * 0.5}
-        local e = ENTITY(self:GetCrateDescription(extent,math.random(1,10),TEXTURE.Get("crate" .. math.random(1,3))),pos)
+        local e = ENTITY(CRATES.GetDescription(name), pos)
         last_y = pos[2] - extent[2] * 0.5
     end
 end

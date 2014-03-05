@@ -1,5 +1,6 @@
 require 'level'
 require 'component_cannon'
+require 'editor'
 
 GAME = class(function(o)
     o.MouseIsDown = {}
@@ -23,9 +24,65 @@ function GAME:Load()
     font = love.graphics.newFont("data/game_boy.ttf",24)
 end
 
-function GAME:NewGame()
+function GAME:Update(dt)
+    self:UpdateState(dt)
+
+    self:UpdateInput()
+
+
+    local cursor_position = {love.mouse.getPosition()}
+
+    if self.MouseIsDown[2] then
+        local delta = {cursor_position[1] - self.PreviousMousePosition[1], cursor_position[2] - self.PreviousMousePosition[2]}
+        self.Camera.Position[1] = self.Camera.Position[1] - delta[1]
+        self.Camera.Position[2] = self.Camera.Position[2] - delta[2]
+    end
+
+    self.MouseWorldPosition = {self.Camera.Position[1] + cursor_position[1], self.Camera.Position[2] + cursor_position[2]}
+
+    self.PreviousMousePosition = cursor_position
+end
+
+function GAME.OnStateEnter:Menu()
+end
+
+function GAME.OnStateUpdate:Menu(dt)
+
+end
+
+function GAME.OnStateExit:Menu()
+
+end
+
+
+function GAME.OnStateEnter:Editor()
     ENTITY.DestroyAll()
-    self.Level:Load()
+    self.Level:Init()
+    self.Camera = ENTITY({
+        {
+            Type = "CAMERA",
+            Properties = {
+            }
+        }
+    })
+
+    self.Editor = EDITOR()
+    self.Editor:New()
+end
+
+function GAME.OnStateUpdate:Editor(dt)
+    self.Editor:Update(dt)
+end
+
+function GAME.OnStateExit:Editor()
+
+end
+
+function GAME.OnStateEnter:InGame()
+    ENTITY.DestroyAll()
+    self.Level:Init()
+
+    self.Level:Test()
     self.Camera = ENTITY({
         {
             Type = "CAMERA",
@@ -50,52 +107,10 @@ function GAME:NewGame()
     }, {20, 500})
 end
 
-function GAME:Update(dt)
-    self:UpdateInput()
-
-    local cursor_position = {love.mouse.getPosition()}
-
-    if self.MouseIsDown[2] then
-        local delta = {cursor_position[1] - self.PreviousMousePosition[1], cursor_position[2] - self.PreviousMousePosition[2]}
-        self.Camera.Position[1] = self.Camera.Position[1] - delta[1]
-        self.Camera.Position[2] = self.Camera.Position[2] - delta[2]
-    end
-
-    self.MouseWorldPosition = {self.Camera.Position[1] + cursor_position[1], self.Camera.Position[2] + cursor_position[2]}
-
+function GAME.OnStateUpdate:InGame(dt)
     if self.MouseIsJustDown[1] then
-        --self:SpawnBall(self.MouseWorldPosition)
-
         self.Cannon:Shoot()
     end
-
-    self:UpdateState(dt)
-    self.PreviousMousePosition = cursor_position
-
-end
-
-function GAME.OnStateEnter:Menu()
-    self:NewGame()
-end
-
-function GAME.OnStateUpdate:Menu(dt)
-
-    if self.MouseIsJustDown then
-        self:ChangeState("InGame")
-    end
-end
-
-function GAME.OnStateExit:Menu()
-
-end
-
-function GAME.OnStateEnter:InGame()
-
-
-end
-
-function GAME.OnStateUpdate:InGame(dt)
-
 end
 
 function GAME.OnStateUpdate:GameOver(dt)
