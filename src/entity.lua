@@ -101,24 +101,8 @@ ENTITY = entity_class(function(o,components,position)
 
     o.Components = {}
     if components ~= nil then
-        local component, properties, constructor
         for k,v in pairs(components) do
-
-            if type(k) == 'string' then
-                constructor = _G["COMPONENT_" .. k]
-                properties = v
-            else
-                constructor = _G["COMPONENT_" .. v.Type]
-                properties = v.Properties
-            end
-
-            if not constructor then
-                error("LCS: Unknown component <" .. v.Type .. ">")
-            end
-
-            component = constructor(properties,o)
-
-            table.insert(o.Components, component)
+            o:AddComponent(v)
         end
     end
     o:Register()
@@ -176,6 +160,21 @@ function ENTITY.GetItems()
 end
 
 -- METHODS
+
+function ENTITY:AddComponent(desc)
+    local component, properties, constructor
+
+    constructor = _G["COMPONENT_" .. desc.Type]
+    properties = desc.Properties
+
+    if not constructor then
+        error("LCS: Unknown component <" .. desc.Type .. ">")
+    end
+
+    component = constructor(properties,self)
+
+    table.insert(self.Components, component)
+end
 
 function ENTITY:Register()
     for k,v in ipairs(self.Components) do
