@@ -69,3 +69,11 @@ end
 function COMPONENT_PHYSIC:SetLinearVelocity(x,y)
     self.Body:setLinearVelocity(x,y)
 end
+
+function COMPONENT_PHYSIC:GetLinearVelocity()
+    return self.Body:getLinearVelocity()
+end
+
+function COMPONENT_PHYSIC:GetFixture()
+    return self.Fixture
+end
