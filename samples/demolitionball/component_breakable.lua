@@ -2,9 +2,10 @@ require 'lcs.class'
 
 COMPONENT_BREAKABLE= class(function(o,parameters,entity)
     o.Entity = entity
-    o.Resistance = parameters.Resistance or 1000
+    o.Resistance = parameters.Resistance or 10000
     o.InitialResistance = o.Resistance
     o.TexturesNames = parameters.TexturesNames
+    o.Shock = 0
 end)
 
 -- METHODS
@@ -15,6 +16,16 @@ function COMPONENT_BREAKABLE:Update(dt)
     local n = math.floor((( 1.0 - life ) * #self.TexturesNames)) + 1
 
     self.Entity:SetSpriteTexture(TEXTURE.Get(self.TexturesNames[n]))
+
+    if self.Shock > 100 then
+        self.Resistance = self.Resistance - self.Shock
+        if self.Resistance < 0 then
+            self:CreateDebris()
+            self.Entity:Destroy()
+        end
+    end
+
+    self.Shock = 0
 end
 
 function COMPONENT_BREAKABLE:PreRender()
@@ -29,17 +40,19 @@ function COMPONENT_BREAKABLE:OnCollisionBegin(other)
 end
 
 function COMPONENT_BREAKABLE:OnCollisionPostSolve(other, impulseA, impulseB)
+    local vx,vy =  self.Entity:GetLinearVelocity()
+
+    if math.abs(vy) < 1 then
+        return
+    end
+
     local impulse = impulseA + impulseB
     impulse = impulseB
 
-    if impulse > 10 then
-        self.Resistance = self.Resistance - impulse
 
-        if self.Resistance < 0 then
-            self:CreateDebris()
-            self.Entity:Destroy()
-        end
-    end
+    local density = self.Entity:GetFixture():getDensity()
+
+    self.Shock = self.Shock + impulse/density
 end
 
 function COMPONENT_BREAKABLE:CreateDebris()

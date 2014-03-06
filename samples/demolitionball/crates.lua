@@ -5,12 +5,12 @@ CRATES.List = {
     Small = {
         Extent = {32,32},
         Textures = {"crate1_0", "crate1_1", "crate1_2"},
-        Density = 2
+        Density = 100
     },
     Big = {
         Extent = {64,64},
-        Textures = {"crate1_0", "crate1_1", "crate1_2"},
-        Density = 2
+        Textures = {"crate2_0", "crate2_1", "crate2_2", "crate2_3"},
+        Density = 200
     }
 }
 

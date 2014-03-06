@@ -21,7 +21,7 @@ function LEVEL:Init()
             Type = "PHYSIC",
             Properties = {
                 Shape = "rectangle",
-                Extent = {10240,4*15},
+                Extent = {10240,60},
                 Type = "static",
                 Density = 1
             }
@@ -69,7 +69,7 @@ function LEVEL:GetCrateDescription(extent,density,texture)
 end
 
 function LEVEL:GenerateTower(x)
-    local last_y = 560
+    local last_y = 570
     local names={"Small","Big"}
     for i=1,10 do
         local name = names[math.random(1,2)]

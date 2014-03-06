@@ -143,7 +143,7 @@ function GAME:SpawnBall(pos)
                 Shape = "circle",
                 Radius = 7,
                 Type = "dynamic",
-                Density = 100
+                Density = 1000
             }
         },
         {
