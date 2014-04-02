@@ -1,5 +1,5 @@
 LEVEL = class(function(o)
-    o.ObstacleHeight = 256
+    o.ObstacleHeight = 512
     o.Obstacles = {}
 end)
 
@@ -14,7 +14,34 @@ function LEVEL:Load(game)
             {
                 Type = "SPRITE_BATCH",
                 Properties = {
-                    SpriteSheet = SPRITE_SHEET.Get("tiles"),
+                    SpriteSheet = SPRITE_SHEET.Get("floors"),
+                    Size = 10240
+                }
+            }
+        },
+        Ceilings = {
+             {
+                Type = "SPRITE_BATCH",
+                Properties = {
+                    SpriteSheet = SPRITE_SHEET.Get("ceilings"),
+                    Size = 10240
+                }
+            }
+        },
+        VisualObstacles = {
+             {
+                Type = "SPRITE_BATCH",
+                Properties = {
+                    SpriteSheet = SPRITE_SHEET.Get("obstacles"),
+                    Size = 10240
+                }
+            }
+        },
+        VisualObstaclesV = {
+             {
+                Type = "SPRITE_BATCH",
+                Properties = {
+                    SpriteSheet = SPRITE_SHEET.Get("obstacles_v"),
                     Size = 10240
                 }
             }
@@ -39,13 +66,6 @@ function LEVEL:Load(game)
         },
         Obstacle = {
             {
-                Type = "SPRITE",
-                Properties = {
-                    Texture = TEXTURE.Get("pipe"),
-                    Extent = {64,self.ObstacleHeight}
-                }
-            },
-            {
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
@@ -54,12 +74,28 @@ function LEVEL:Load(game)
                 }
             }
         },
+        ObstacleV = {
+            {
+                Type = "PHYSIC",
+                Properties = {
+                    Shape = "rectangle",
+                    Extent = {64,self.ObstacleHeight},
+                    Type = "static"
+                }
+            }
+        }
     }
 
     self.Sky = ENTITY(descriptions.Sky)
     self.World = ENTITY(descriptions.World)
+    self.Ceilings = ENTITY(descriptions.Ceilings)
+
     self.Ceiling = ENTITY(descriptions.Block,{0,0})
     self.Floor = ENTITY(descriptions.Block,{0,570})
+
+
+    self.VisualObstacles = ENTITY(descriptions.VisualObstacles)
+    self.VisualObstaclesV = ENTITY(descriptions.VisualObstaclesV)
 
 
     self:GenerateSky()
@@ -72,24 +108,31 @@ function LEVEL:GenerateSky()
     local sky = self.Sky
 
     sky:Bind()
-    for i=1,100 do
-        sky:AddSpriteQuad(q,200 + i * 150,math.random(0,600),0,math.random(4,6),math.random(4,6))
+    for i=1,64 do
+        sky:AddSpriteQuad(q,200 + i * 250,math.random(0,600),0,math.random(4,6),math.random(4,6))
     end
     sky:Unbind()
 end
 
 function LEVEL:GenerateBlocks(descriptions)
-    local ss = SPRITE_SHEET.Get("tiles")
-    local q = ss:GetQuad("block")
+    local ss = SPRITE_SHEET.Get("floors")
+    local q = ss:GetQuad("floor")
     local w = self.World
 
     self.Obstacles = {}
 
     w:Bind()
-    for i=1,1000 do
-        w:AddSpriteQuad(q, i * 4 * 15,0,0,4,-4)
-        w:AddSpriteQuad(q, i * 4 * 15,570,0,4,4)
+
+    for i=1,64 do
+        self.Ceilings:AddSpriteQuad(q, i*64,0,0,1,1)
+
+        w:AddSpriteQuad(q, i*64,570,0,1,1)
     end
+
+    w:Unbind()
+
+    ss = SPRITE_SHEET.Get("obstacles")
+    q = ss:GetQuad("obstacle")
 
     local lastx = 4 * 15 * 10
     local y
@@ -97,12 +140,12 @@ function LEVEL:GenerateBlocks(descriptions)
         local x = lastx + 4 * 15 * math.random(5,10)
         local center = math.random(150,450)
 
-        y = center-self.ObstacleHeight * 0.85
-        --w:AddSpriteQuad(q, x,y,0,4,32)
-        ENTITY(descriptions.Obstacle,{x,y})
+        y = center-self.ObstacleHeight * 0.65
+        self.VisualObstaclesV:AddSpriteQuad(q,x,y, 0, 1,1)
+        ENTITY(descriptions.ObstacleV,{x,y})
 
-        y = center+self.ObstacleHeight *0.85
-        --w:AddSpriteQuad(q, x,y,0,4,32)
+        y = center+self.ObstacleHeight * 0.65
+        self.VisualObstacles:AddSpriteQuad(q,x,y, 0, 1,1)
         ENTITY(descriptions.Obstacle,{x,y})
 
         lastx = x
@@ -110,7 +153,6 @@ function LEVEL:GenerateBlocks(descriptions)
         table.insert(self.Obstacles, x)
     end
 
-    w:Unbind()
 end
 
 function LEVEL:Update(dt)

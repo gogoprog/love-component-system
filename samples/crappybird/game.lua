@@ -16,14 +16,25 @@ local title_font, font
 function GAME:Load()
     TEXTURE.Load("bird","data/angry_bird.png")
     TEXTURE.Load("cloud","data/cloud.png")
-    TEXTURE.Load("tiles","data/tiles.png")
     TEXTURE.Load("pipe","data/crappybird_pipe.png")
+    TEXTURE.Load("obstacle_v","data/obstacle_v.png")
+    TEXTURE.Load("ground","data/ground.png")
+    TEXTURE.Load("ceiling","data/ceiling.png")
 
     local ss = SPRITE_SHEET.Create("sky",TEXTURE.Get("cloud"),32,32)
     ss:AddQuad("cloud",0,0,1,1)
 
-    ss = SPRITE_SHEET.Create("tiles",TEXTURE.Get("tiles"),15,15)
-    ss:AddQuad("block",0,0,1,1)
+    ss = SPRITE_SHEET.Create("obstacles",TEXTURE.Get("pipe"),64,512)
+    ss:AddQuad("obstacle",0,0,1,1)
+
+    ss = SPRITE_SHEET.Create("obstacles_v",TEXTURE.Get("obstacle_v"),64,512)
+    ss:AddQuad("obstacle",0,0,1,1)
+
+    ss = SPRITE_SHEET.Create("floors",TEXTURE.Get("ground"),64,64)
+    ss:AddQuad("floor",0,0,1,1)
+
+    ss = SPRITE_SHEET.Create("ceilings",TEXTURE.Get("ceiling"),64,64)
+    ss:AddQuad("ceiling",0,0,1,1)
 
     title_font = love.graphics.newFont("data/game_boy.ttf",72)
     font = love.graphics.newFont("data/game_boy.ttf",24)

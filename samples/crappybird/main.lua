@@ -5,7 +5,7 @@ require 'game'
 local game = GAME()
 
 function love.load(arg)
-    love.graphics.setBackgroundColor( 0, 255, 255 )
+    love.graphics.setBackgroundColor( 229,167,45 )
     ENGINE.Initialize(arg)
     game:Load()
     game:ChangeState("Menu")
