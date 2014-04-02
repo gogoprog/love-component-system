@@ -10,9 +10,12 @@ function love.load()
         })
 
     local description = {
-        ANIMATED_SPRITE = {
-            Animation = ANIMATION.Get("ken"),
-            Extent = { 256, 256 }
+        {
+            Type= "ANIMATED_SPRITE",
+            Properties = {
+                Animation = ANIMATION.Get("ken"),
+                Extent = { 256, 256 }
+            }
         }
     }
 

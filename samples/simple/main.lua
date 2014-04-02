@@ -5,36 +5,55 @@ require 'lcs.engine'
 local texture = love.graphics.newImage("data/texture.png")
 local descriptions ={
     World = {
-        PHYSIC_WORLD = {
+        {
+            Type = "PHYSIC_WORLD",
+            Properties = {}
         }
     },
     Object = {
-        SPRITE = {
+    {
+        Type = "SPRITE",
+        Properties = {
             Texture = texture,
             Extent = {64,64},
             Layer = 3
+        }
         },
-        PHYSIC = {
+    {
+        Type = "PHYSIC",
+        Properties = {
             Shape = "circle",
             Radius = 32
-        },
-        PARTICLE = {
-            Layer = 2
         }
     },
+    {
+        Type = "PARTICLE",
+        Properties = {
+            Layer = 2
+        }
+    }
+    },
     Ground = {
-        QUAD = {
-            Extent = {600,60},
-            Layer = 1
+        {
+            Type = "QUAD",
+            Properties = {
+                Extent = {600,60},
+                Layer = 1
+            }
         },
-        PHYSIC = {
-            Shape = "rectangle",
-            Extent = {600,60},
-            Type = "static"
+        {
+            Type = "PHYSIC",
+            Properties = {
+                Shape = "rectangle",
+                Extent = {600,60},
+                Type = "static"
+            }
         }
     },
     Camera = {
-        CAMERA = {
+        {
+            Type = "CAMERA",
+            Properties = {}
         }
     }
 }
