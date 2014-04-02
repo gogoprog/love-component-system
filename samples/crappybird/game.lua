@@ -14,7 +14,13 @@ STATE_MACHINE.ImplementInClass(GAME)
 local title_font, font
 
 function GAME:Load()
-    TEXTURE.Load("bird","data/angry_bird.png")
+    TEXTURE.Load("bird_up","data/bird_up.png")
+    TEXTURE.Load("bird_down","data/bird_down.png")
+    TEXTURE.Load("lose_up","data/lose_up.png")
+    TEXTURE.Load("lose_down","data/lose_down.png")
+
+    TEXTURE.Load("logo","data/logo.png")
+
     TEXTURE.Load("cloud","data/cloud.png")
     TEXTURE.Load("pipe","data/crappybird_pipe.png")
     TEXTURE.Load("obstacle_v","data/obstacle_v.png")
@@ -75,12 +81,9 @@ function GAME.OnStateEnter:Menu()
     local descriptions = {
         Title = {
             {
-                Type = "TEXT",
+                Type = "SPRITE",
                 Properties = {
-                    Text = "CrappyBird",
-                    Layer = 100,
-                    Color = {0,0,0,255},
-                    Font = title_font,
+                    Texture = TEXTURE.Get("logo"),
                     World = 2
                 }
             }
@@ -96,13 +99,26 @@ function GAME.OnStateEnter:Menu()
                     World = 2
                 }
             }
+        },
+        Credits = {
+            {
+                Type = "TEXT",
+                Properties = {
+                    Text = "Gauthier Billot        Ilyas Sfar",
+                    Layer = 100,
+                    Color = {0,0,0,255},
+                    Font = font,
+                    World = 2
+                }
+            }
         }
     }
 
     self:NewGame()
 
-    self.Title = ENTITY(descriptions.Title,{400,100})
-    self.Text = ENTITY(descriptions.Text,{400,300})
+    self.Title = ENTITY(descriptions.Title,{400,200})
+    self.Text = ENTITY(descriptions.Text,{400,350})
+    self.Credits = ENTITY(descriptions.Credits,{400,580})
 end
 
 function GAME.OnStateUpdate:Menu(dt)
@@ -120,6 +136,8 @@ function GAME.OnStateExit:Menu()
     self.Title = nil
     self.Text:Destroy()
     self.Text = nil
+    self.Credits:Destroy()
+    self.Credits = nil
 end
 
 function GAME.OnStateEnter:InGame()
@@ -131,7 +149,7 @@ function GAME.OnStateEnter:InGame()
                 Properties = {
                     Text = "Score: 00",
                     Layer = 100,
-                    Color = {0,0,0,255},
+                    Color = {220,230,240,255},
                     Font = font,
                     World = 2
                 }

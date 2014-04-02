@@ -59,7 +59,7 @@ function LEVEL:Load(game)
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {10240,4*15},
+                    Extent = {102400,4*15},
                     Type = "static"
                 }
             }
@@ -109,7 +109,7 @@ function LEVEL:GenerateSky()
 
     sky:Bind()
     for i=1,64 do
-        sky:AddSpriteQuad(q,200 + i * 250,math.random(0,600),0,math.random(4,6),math.random(4,6))
+        sky:AddSpriteQuad(q,200 + i * 350,math.random(0,600),0,math.random(6,11),math.random(4,6))
     end
     sky:Unbind()
 end
@@ -123,7 +123,7 @@ function LEVEL:GenerateBlocks(descriptions)
 
     w:Bind()
 
-    for i=1,64 do
+    for i=1,1024 do
         self.Ceilings:AddSpriteQuad(q, i*64,0,0,1,1)
 
         w:AddSpriteQuad(q, i*64,570,0,1,1)
