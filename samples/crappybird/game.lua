@@ -17,6 +17,7 @@ function GAME:Load()
     TEXTURE.Load("bird","data/angry_bird.png")
     TEXTURE.Load("cloud","data/cloud.png")
     TEXTURE.Load("tiles","data/tiles.png")
+    TEXTURE.Load("pipe","data/crappybird_pipe.png")
 
     local ss = SPRITE_SHEET.Create("sky",TEXTURE.Get("cloud"),32,32)
     ss:AddQuad("cloud",0,0,1,1)

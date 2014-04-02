@@ -1,5 +1,5 @@
 LEVEL = class(function(o)
-    o.ObstacleHeight = 8*4*15
+    o.ObstacleHeight = 256
     o.Obstacles = {}
 end)
 
@@ -39,10 +39,17 @@ function LEVEL:Load(game)
         },
         Obstacle = {
             {
+                Type = "SPRITE",
+                Properties = {
+                    Texture = TEXTURE.Get("pipe"),
+                    Extent = {64,self.ObstacleHeight}
+                }
+            },
+            {
                 Type = "PHYSIC",
                 Properties = {
                     Shape = "rectangle",
-                    Extent = {4*15,self.ObstacleHeight},
+                    Extent = {64,self.ObstacleHeight},
                     Type = "static"
                 }
             }
@@ -90,12 +97,12 @@ function LEVEL:GenerateBlocks(descriptions)
         local x = lastx + 4 * 15 * math.random(5,10)
         local center = math.random(150,450)
 
-        y = center-self.ObstacleHeight* 0.65
-        w:AddSpriteQuad(q, x,y,0,4,32)
+        y = center-self.ObstacleHeight * 0.85
+        --w:AddSpriteQuad(q, x,y,0,4,32)
         ENTITY(descriptions.Obstacle,{x,y})
 
-        y = center+self.ObstacleHeight*0.65
-        w:AddSpriteQuad(q, x,y,0,4,32)
+        y = center+self.ObstacleHeight *0.85
+        --w:AddSpriteQuad(q, x,y,0,4,32)
         ENTITY(descriptions.Obstacle,{x,y})
 
         lastx = x
